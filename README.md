@@ -63,7 +63,8 @@ its independence protocol: separate AI agents carried out the independent review
 the certificate chain, the two independent verifiers in exact rational and exact integer
 arithmetic, the proof notes and the manuscript text in separate passes; their reports are
 deposited beside the text they reviewed (`records/common-cutoff-review/`,
-`records/mustar-half/REVIEW.md`, `records/einstein-opt2/REVIEW.md`). Every claim the
+`records/mustar-half/REVIEW.md`, `reviews/REVIEW.md`); the report on the Version 2 record and
+manuscript is summarized by its verdict in `CLAIMS.md` Section 14. Every claim the
 records make about a number in the paper is a claim about the bytes of the version released
 here.
 
@@ -87,12 +88,12 @@ here.
 
 ## Replay
 
-Python 3.12 with pinned dependencies: `numpy==2.5.5`, `scipy==1.18.1`, `mpmath==1.4.1`,
-`sympy==1.14.0`. From a checkout (or from the unpacked release archive) at the repository
-root:
+Python 3.12 with pinned dependencies: `numpy==2.5.5`, `scipy==1.18.1`, `mpmath==1.3.0`,
+`sympy==1.14.0` (sympy 1.14 requires mpmath below 1.4). From a checkout or from the
+unpacked release archive, at the repository root:
 
 ```
-python -m pip install numpy==2.5.5 scipy==1.18.1 mpmath==1.4.1 sympy==1.14.0
+python -m pip install numpy==2.5.5 scipy==1.18.1 mpmath==1.3.0 sympy==1.14.0
 
 (cd records/common-cutoff && python -B replay.py)
 (cd records/common-cutoff && python -B independent.py)
