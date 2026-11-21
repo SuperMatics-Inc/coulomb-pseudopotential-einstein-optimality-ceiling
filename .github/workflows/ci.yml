@@ -4,7 +4,7 @@ permissions:
   contents: read
 env:
   PYTHON_VERSION: '3.12'
-  DEPS: 'numpy==2.5.5 scipy==1.18.1 mpmath==1.4.1 sympy==1.14.0'
+  DEPS: 'numpy==2.5.5 scipy==1.18.1 mpmath==1.3.0 sympy==1.14.0'
   PDF_SHA256: '9d3bd9975260cc255a6f1b30dd56d018ae6e5afbaaa6b4cee5c24f5387a3bb55'
 jobs:
   tree:
