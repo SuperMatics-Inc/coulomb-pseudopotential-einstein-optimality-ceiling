@@ -30,6 +30,7 @@ jobs:
           set -euo pipefail
           expect_ok() { marker=$1; shift; "$@" > out.txt 2>&1; cat out.txt; grep -qF "$marker" out.txt; }
           expect_refuse() { if "$@" > mutant.txt 2>&1; then cat mutant.txt; echo "mutant accepted: $*"; exit 1; fi; }
+          expect_mutant() { marker=$1; shift; if "$@" > mutant.txt 2>&1; then cat mutant.txt; echo "mutant accepted: $*"; exit 1; fi; cat mutant.txt; grep -qF "$marker" mutant.txt; }
           expect_ok 'stored bounds.json verified without rewriting' python -B replay.py
           for m in sign spectrum tail coulomb endpoint; do expect_refuse python -B replay.py --mutant $m; done
           expect_ok 'independent verification of the common-cutoff certificates: OK' python -B independent.py
@@ -37,9 +38,9 @@ jobs:
           expect_ok 'adversarial probes: every box with an exactly negative folded form was refused' python -B independent.py --adversarial
           for m in endpoint coulomb spectrum receipt; do expect_refuse python -B independent.py --mutant $m; done
           expect_ok 'structural checks passed on 400 rational two-line spectra (exact arithmetic)' python -B structure.py
-          expect_ok 'mutant controls refused 36 perturbed statements (as required)' python -B structure.py --mutant
+          expect_mutant 'mutant controls refused 36 perturbed statements (as required)' python -B structure.py --mutant
           expect_ok 'folded identity (matrix form = display form) verified exactly in 120 rational trials' python -B structure.py --folded
-          expect_refuse python -B structure.py --folded --mutant
+          expect_mutant 'folded mutant: the display missing the tail term differs from the matrix in 120/120 trials' python -B structure.py --folded --mutant
           expect_ok 'full-line cross-check: every Einstein bracket reproduced' python -B crosscheck.py
           for m in mirror zshift; do expect_refuse python -B crosscheck.py --mutant $m; done
       - name: MUSTAR-HALF replay, independent implementation, phase scan and mutants
@@ -48,6 +49,7 @@ jobs:
           set -euo pipefail
           expect_ok() { marker=$1; shift; "$@" > out.txt 2>&1; cat out.txt; grep -qF "$marker" out.txt; }
           expect_refuse() { if "$@" > mutant.txt 2>&1; then cat mutant.txt; echo "mutant accepted: $*"; exit 1; fi; }
+          expect_mutant() { marker=$1; shift; if "$@" > mutant.txt 2>&1; then cat mutant.txt; echo "mutant accepted: $*"; exit 1; fi; cat mutant.txt; grep -qF "$marker" mutant.txt; }
           expect_ok 'stored bounds.json verified without rewriting' python -B replay.py
           for m in coulomb spectrum endpoint tail sign; do expect_refuse python -B replay.py --mutant $m; done
           expect_ok 'independent verification of MUSTAR-HALF certificates: OK' python -B independent.py
@@ -55,7 +57,7 @@ jobs:
           expect_ok 'adversarial probes: every box with an exactly negative folded form was refused' python -B independent.py --adversarial
           for m in entrywise v1pen rsign overflow endpoint coulomb spectrum receipt; do expect_refuse python -B independent.py --mutant $m; done
           expect_ok 'structural checks passed on 40 random rational trials + F4 refutation witnesses' python -B structure.py
-          expect_ok 'REFUSED: mutant structural checks failed as required' python -B structure.py --mutant
+          expect_mutant 'REFUSED: mutant structural checks failed as required' python -B structure.py --mutant
           expect_ok 'phase_scan.py numerical checks: OK' python -B phase_scan.py
           expect_refuse python -B phase_scan.py --mutant
       - name: Public prose safeguards
@@ -94,12 +96,12 @@ jobs:
           if grep -nE 'Overfull|Underfull|Undefined|Citation.*undefined|There were undefined' main.log; then exit 1; fi
           test -s main.pdf
           pdfinfo -url main.pdf > urls.txt
-          grep -qF 'https://orcid.org/0000-0001-5839-5197' urls.txt
+          grep -qF 'https://orcid.org/0000-0001-5839-5197' urls.txt || { cat urls.txt; echo 'ORCID link missing from the PDF annotations'; exit 1; }
           pdftotext main.pdf main.txt
           if grep -nF '—' main.txt; then exit 1; fi
           if grep -nE '\b(CUTOFF-PAPER|MUSTAR|C-LAMBDA|BARRIERS2|ADIABATIC|PURESSH|STATIC-MODE|MASSIVE)[[:alnum:]_-]*|ceiling-20261118|D:/|C:/t|\bMac\b|\blane\b|reserved DOI|awaits review' main.txt; then exit 1; fi
-          tr -s '[:space:]' ' ' < main.txt | grep -qF 'This preprint has not been peer reviewed.'
-          tr -s '[:space:]' ' ' < main.txt | grep -qF 'Separate AI agents carried out the independent reviews.'
+          tr -s '[:space:]' ' ' < main.txt | grep -qF 'This preprint has not been peer reviewed.' || { echo 'peer-review sentence missing'; exit 1; }
+          tr -s '[:space:]' ' ' < main.txt | grep -qF 'separate AI agents carried out the independent reviews' || { echo 'AI disclosure sentence missing'; exit 1; }
       - uses: actions/upload-artifact@v4
         with:
           name: coulomb-pseudopotential-einstein-optimality-paper
