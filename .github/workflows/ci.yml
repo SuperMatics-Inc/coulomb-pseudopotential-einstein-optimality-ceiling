@@ -23,9 +23,11 @@ jobs:
       - name: Forbidden-file and release-tree policy
         run: |
           set -euo pipefail
-          git ls-files > tracked.txt
+          # Policy scratch files live outside the tree so the untracked-file check stays honest.
+          P=$(mktemp -d)
+          git ls-files > "$P/tracked.txt"
           # Root carries only the release documents, the workflow and the manifest pair.
-          cat > allowed-root.txt <<'EOF'
+          cat > "$P/allowed-root.txt" <<'EOF'
           .gitattributes
           .github/replay.sh
           .github/workflows/ci.yml
@@ -38,37 +40,37 @@ jobs:
           README.md
           EOF
           # paper/ carries the manuscript sources and the released PDF, nothing else.
-          printf 'paper/main.tex\npaper/main.pdf\npaper/refs.bib\n' > allowed-paper.txt
-          awk -F/ 'NF==1 || ($1==".github")' tracked.txt | sort > root-actual.txt
-          sort allowed-root.txt > root-allowed-sorted.txt
-          if ! diff -u root-allowed-sorted.txt root-actual.txt; then
+          printf 'paper/main.tex\npaper/main.pdf\npaper/refs.bib\n' > "$P/allowed-paper.txt"
+          awk -F/ 'NF==1 || ($1==".github")' "$P/tracked.txt" | sort > "$P/root-actual.txt"
+          sort "$P/allowed-root.txt" > "$P/root-allowed-sorted.txt"
+          if ! diff -u "$P/root-allowed-sorted.txt" "$P/root-actual.txt"; then
             echo 'unexpected file in the repository root or .github/'; exit 1
           fi
-          grep -E '^paper/' tracked.txt | sort > paper-actual.txt
-          sort allowed-paper.txt > paper-allowed-sorted.txt
-          if ! diff -u paper-allowed-sorted.txt paper-actual.txt; then
+          grep -E '^paper/' "$P/tracked.txt" | sort > "$P/paper-actual.txt"
+          sort "$P/allowed-paper.txt" > "$P/paper-allowed-sorted.txt"
+          if ! diff -u "$P/paper-allowed-sorted.txt" "$P/paper-actual.txt"; then
             echo 'unexpected file in paper/'; exit 1
           fi
-          if grep -nE '^([^/]+/)?[^/]*\.v[0-9]+\.' tracked.txt; then
+          if grep -nE '^([^/]+/)?[^/]*\.v[0-9]+\.' "$P/tracked.txt"; then
             echo 'backup copy of a versioned file'; exit 1
           fi
-          if grep -nE '\.(log|blg|aux|toc|out|bbl|synctex\.gz|zip|tar|tar\.gz|tgz|orig|rej|bak)$' tracked.txt; then
+          if grep -nE '\.(log|blg|aux|toc|out|bbl|synctex\.gz|zip|tar|tar\.gz|tgz|orig|rej|bak)$' "$P/tracked.txt"; then
             echo 'build log, archive or patch residue'; exit 1
           fi
-          if grep -nE '(^|/)(NOTES|PAPER-REVIEW|FIX-PAPER-REVIEW)[^/]*$' tracked.txt; then
+          if grep -nE '(^|/)(NOTES|PAPER-REVIEW|FIX-PAPER-REVIEW)[^/]*$' "$P/tracked.txt"; then
             echo 'release-process notes'; exit 1
           fi
-          if grep -vE '^paper/main\.pdf$' tracked.txt | grep -nE '\.pdf$'; then
+          if grep -vE '^paper/main\.pdf$' "$P/tracked.txt" | grep -nE '\.pdf$'; then
             echo 'PDF outside paper/main.pdf'; exit 1
           fi
-          if grep -nE '(^|/)(\.env|secrets[^/]*|id_rsa[^/]*|.*\.pem)$' tracked.txt; then
+          if grep -nE '(^|/)(\.env|secrets[^/]*|id_rsa[^/]*|.*\.pem)$' "$P/tracked.txt"; then
             echo 'credential file'; exit 1
           fi
           if git ls-files --others --exclude-standard | grep -q .; then
             git ls-files --others --exclude-standard
             echo 'untracked file in the release tree'; exit 1
           fi
-          rm -f tracked.txt allowed-root.txt allowed-paper.txt root-actual.txt root-allowed-sorted.txt paper-actual.txt paper-allowed-sorted.txt
+          rm -rf "$P"
       - name: Release identifiers
         run: |
           set -euo pipefail
