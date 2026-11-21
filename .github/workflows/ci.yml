@@ -1,0 +1,105 @@
+name: replay-and-paper
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source manifest
+        run: |
+          set -euo pipefail
+          sha256sum -c MANIFEST.sha256
+          sha256sum -c ADMITTED.sha256
+          test "$(wc -l < MANIFEST.sha256)" = "$(wc -l < ADMITTED.sha256)"
+          total=$(find . -type f -not -path './.git/*' | wc -l)
+          test $((total - 2)) -eq "$(wc -l < MANIFEST.sha256)"
+      - name: Install pinned replay dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check numpy==2.5.5 scipy==1.18.1
+          python -c "import numpy, scipy; print(numpy.__version__, scipy.__version__)"
+      - name: Common-cutoff replay, independent implementation and mutants
+        working-directory: records/common-cutoff
+        run: |
+          set -euo pipefail
+          expect_ok() { marker=$1; shift; "$@" > out.txt 2>&1; cat out.txt; grep -qF "$marker" out.txt; }
+          expect_refuse() { if "$@" > mutant.txt 2>&1; then cat mutant.txt; echo "mutant accepted: $*"; exit 1; fi; }
+          expect_ok 'stored bounds.json verified without rewriting' python -B replay.py
+          for m in sign spectrum tail coulomb endpoint; do expect_refuse python -B replay.py --mutant $m; done
+          expect_ok 'independent verification of the common-cutoff certificates: OK' python -B independent.py
+          expect_ok 'interval enclosure selfcheck:' python -B independent.py --selfcheck
+          expect_ok 'adversarial probes: every box with an exactly negative folded form was refused' python -B independent.py --adversarial
+          for m in endpoint coulomb spectrum receipt; do expect_refuse python -B independent.py --mutant $m; done
+          expect_ok 'structural checks passed on 400 rational two-line spectra (exact arithmetic)' python -B structure.py
+          expect_ok 'mutant controls refused 36 perturbed statements (as required)' python -B structure.py --mutant
+          expect_ok 'folded identity (matrix form = display form) verified exactly in 120 rational trials' python -B structure.py --folded
+          expect_refuse python -B structure.py --folded --mutant
+          expect_ok 'full-line cross-check: every Einstein bracket reproduced' python -B crosscheck.py
+          for m in mirror zshift; do expect_refuse python -B crosscheck.py --mutant $m; done
+      - name: MUSTAR-HALF replay, independent implementation, phase scan and mutants
+        working-directory: records/mustar-half
+        run: |
+          set -euo pipefail
+          expect_ok() { marker=$1; shift; "$@" > out.txt 2>&1; cat out.txt; grep -qF "$marker" out.txt; }
+          expect_refuse() { if "$@" > mutant.txt 2>&1; then cat mutant.txt; echo "mutant accepted: $*"; exit 1; fi; }
+          expect_ok 'stored bounds.json verified without rewriting' python -B replay.py
+          for m in coulomb spectrum endpoint tail sign; do expect_refuse python -B replay.py --mutant $m; done
+          expect_ok 'independent verification of MUSTAR-HALF certificates: OK' python -B independent.py
+          expect_ok 'interval enclosure selfcheck:' python -B independent.py --selfcheck
+          expect_ok 'adversarial probes: every box with an exactly negative folded form was refused' python -B independent.py --adversarial
+          for m in entrywise v1pen rsign overflow endpoint coulomb spectrum receipt; do expect_refuse python -B independent.py --mutant $m; done
+          expect_ok 'structural checks passed on 40 random rational trials + F4 refutation witnesses' python -B structure.py
+          expect_ok 'REFUSED: mutant structural checks failed as required' python -B structure.py --mutant
+          expect_ok 'phase_scan.py numerical checks: OK' python -B phase_scan.py
+          expect_refuse python -B phase_scan.py --mutant
+      - name: Public prose safeguards
+        run: |
+          set -euo pipefail
+          if grep -nF '—' paper/main.tex README.md; then exit 1; fi
+          if grep -nE '\b(CUTOFF-PAPER|MUSTAR|C-LAMBDA|BARRIERS2|ADIABATIC|PURESSH|STATIC-MODE|MASSIVE)[[:alnum:]_-]*|ceiling-20261118|D:/|C:/t|\bMac\b|\blane\b|reserved DOI|awaits review' paper/main.tex README.md; then exit 1; fi
+          grep -qF 'This preprint has not been peer reviewed.' paper/main.tex
+          grep -qF 'This preprint has not been peer reviewed.' README.md
+  paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SOURCE_DATE_EPOCH: "1795132800"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Tectonic and poppler
+        run: |
+          set -euo pipefail
+          curl -fsSL https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.17.0/tectonic-0.17.0-x86_64-unknown-linux-gnu.tar.gz | sudo tar -xz -C /usr/local/bin
+          tectonic --version
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends poppler-utils
+      - name: Build the manuscript
+        working-directory: paper
+        run: |
+          set -euo pipefail
+          tectonic --keep-logs main.tex
+          if grep -nE 'Overfull|Underfull|Undefined|Citation.*undefined|There were undefined' main.log; then exit 1; fi
+          test -s main.pdf
+          pdfinfo -url main.pdf > urls.txt
+          grep -qF 'https://orcid.org/0000-0001-5839-5197' urls.txt
+          pdftotext main.pdf main.txt
+          if grep -nF '—' main.txt; then exit 1; fi
+          if grep -nE '\b(CUTOFF-PAPER|MUSTAR|C-LAMBDA|BARRIERS2|ADIABATIC|PURESSH|STATIC-MODE|MASSIVE)[[:alnum:]_-]*|ceiling-20261118|D:/|C:/t|\bMac\b|\blane\b|reserved DOI|awaits review' main.txt; then exit 1; fi
+          tr -s '[:space:]' ' ' < main.txt | grep -qF 'This preprint has not been peer reviewed.'
+          tr -s '[:space:]' ' ' < main.txt | grep -qF 'Separate AI agents carried out the independent reviews.'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coulomb-pseudopotential-einstein-optimality-paper
+          path: |
+            paper/main.pdf
+            paper/main.log
+            paper/main.tex
+            paper/refs.bib
+            paper/urls.txt
+          if-no-files-found: error

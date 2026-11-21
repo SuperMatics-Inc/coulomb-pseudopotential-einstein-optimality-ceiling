@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "name": "subhalf-25p6-0p4786",
+      "lambda": "128/5",
+      "mu": "61261/5000",
+      "R2": "113/10",
+      "size_cold": 240,
+      "size_hot": 240,
+      "einstein": ["0.519", "0.525"],
+      "mix": {"low_u": "22/25", "high_u": "20000", "high_p": "3/499978", "q": "11/20", "size": 240}
+    },
+    {
+      "name": "subhalf-26-12over25",
+      "lambda": "26",
+      "mu": "312/25",
+      "R2": "53/5",
+      "size_cold": 240,
+      "size_hot": 240,
+      "einstein": ["0.495", "0.501"],
+      "mix": {"low_u": "4/5", "high_u": "10000", "high_p": "1/49996", "q": "13/25", "size": 240}
+    },
+    {
+      "name": "subhalf-27-0p4848",
+      "lambda": "27",
+      "mu": "1309/100",
+      "R2": "63/5",
+      "size_cold": 240,
+      "size_hot": 240,
+      "einstein": ["0.414", "0.419"],
+      "mix": {"low_u": "69/100", "high_u": "2000", "high_p": "31/199931", "q": "51/100", "size": 240}
+    },
+    {
+      "name": "subhalf-28-0p489",
+      "lambda": "28",
+      "mu": "3423/250",
+      "R2": "62/5",
+      "size_cold": 240,
+      "size_hot": 240,
+      "einstein": ["0.407", "0.412"],
+      "mix": {"low_u": "16/25", "high_u": "1000", "high_p": "9/24984", "q": "49/100", "size": 240}
+    }
+  ],
+  "anchors": [
+    {"name": "anchor-l2-mu1-R3/2", "lambda": "2", "mu": "1", "R2": "9/4",
+     "size_cold": 240, "size_hot": 240, "einstein": ["0.0402", "0.0410"]},
+    {"name": "anchor-l3-mu3/2-R2", "lambda": "3", "mu": "3/2", "R2": "4",
+     "size_cold": 240, "size_hot": 240, "einstein": ["0.0593", "0.0601"]},
+    {"name": "anchor-l10-mu4-R3", "lambda": "10", "mu": "4", "R2": "9",
+     "size_cold": 240, "size_hot": 240, "einstein": ["0.441", "0.447"]},
+    {"name": "anchor-l20-mu19/2-R5", "lambda": "20", "mu": "19/2", "R2": "25",
+     "size_cold": 240, "size_hot": 240, "einstein": ["0.820", "0.827"]}
+  ]
+}

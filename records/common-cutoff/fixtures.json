@@ -1,0 +1,44 @@
+{
+  "cases": [
+    {
+      "name": "einstein-counterexample",
+      "lambda": "3",
+      "mu": "2",
+      "R2": "9/4",
+      "size_cold": 400,
+      "size_hot": 400,
+      "einstein": ["0.0083", "0.0095"],
+      "mix": {"low_u": "1/10", "high_u": "60", "high_p": "9/599", "q": "1/100", "size": 400}
+    },
+    {
+      "name": "counterexample-wide",
+      "lambda": "2",
+      "mu": "3/2",
+      "R2": "4",
+      "size_cold": 400,
+      "size_hot": 400,
+      "einstein": ["0.0009", "0.003"],
+      "mix": {"low_u": "2/25", "high_u": "200", "high_p": "23/4998", "q": "1/200", "size": 400}
+    },
+    {
+      "name": "counterexample-strong",
+      "lambda": "4",
+      "mu": "4",
+      "R2": "4",
+      "size_cold": 400,
+      "size_hot": 400,
+      "einstein": ["129/500000", "0.003"],
+      "mix": {"low_u": "2/25", "high_u": "100", "high_p": "23/2498", "q": "1/100", "size": 400}
+    }
+  ],
+  "anchors": [
+    {"name": "anchor-l1-mu1/2-R1", "lambda": "1", "mu": "1/2", "R2": "1",
+     "size_cold": 400, "size_hot": 400, "einstein": ["0.0112", "0.012"]},
+    {"name": "anchor-l1-mu1/10-R1", "lambda": "1", "mu": "1/10", "R2": "1",
+     "size_cold": 400, "size_hot": 400, "einstein": ["0.308", "0.3105"]},
+    {"name": "anchor-l3-mu1-R3/2", "lambda": "3", "mu": "1", "R2": "9/4",
+     "size_cold": 400, "size_hot": 400, "einstein": ["0.456", "0.4575"]},
+    {"name": "anchor-l10-mu1-R3", "lambda": "10", "mu": "1", "R2": "9",
+     "size_cold": 400, "size_hot": 400, "einstein": ["4.560", "4.565"]}
+  ]
+}

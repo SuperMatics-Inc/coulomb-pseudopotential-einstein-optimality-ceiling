@@ -1,0 +1,96 @@
+Common-cutoff lane (W/C-LAMBDA-MU/COMMON-CUTOFF), checks re-run 20 Nov 2026 on Davis's
+laptop (Windows 10.0.26200, CPython 3.13 through `uv run --no-project`).
+
+Every command below is run from D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/COMMON-CUTOFF
+with the environment variable UV_CACHE_DIR=D:/dev/.cache/uv, so the exact form of each row
+is, for example,
+
+  UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy \
+    --with mpmath python -B replay.py
+
+Exit codes: 0 = the statement was verified. 1 = a mutant's perturbed statement was
+refused as required, with the intended message shown (a mutant exits through `refused`,
+which prints "mutant refused: ..."). 2 = a mutant's unmutated control broke, which
+invalidates the mutant (never observed).
+
+command                                             exit  s    evidence (log tail)
+--------------------------------------------------  ----  ----  -----------------------------------------------------
+replay.py                                             0   31  "stored bounds.json verified without rewriting"
+replay.py --mutant sign                               1    6  "control passed: the unmutated (repulsive-sign) hot certificate covers the interval" then "mutant refused: the sign-flipped mask term is not certified positive (hot interval cannot be certified: 0.0095 0.00950000458353 K=15)"
+replay.py --mutant spectrum                           1    2  two controls passed (Einstein cold witness keeps its sign; two-line witness keeps its own sign) then "mutant refused: the Einstein line is not unstable at the mixture witness q=1/100: the two-line verdict does not transfer"
+replay.py --mutant tail                               1    1  "control passed: the true far tail term is below the bound" then "mutant refused: with far_lump disabled the exact tail guess exceeds the bound"
+replay.py --mutant coulomb                            1    2  "control passed: the Einstein cold witness keeps its sign" then "mutant refused: the cold certificate at q_lo dies when the Coulomb term is doubled"
+replay.py --mutant endpoint                           1    3  "control passed: the Einstein cold witness keeps its sign" then "mutant refused: a cold witness is refused at the certified-stable endpoint q_hi"
+independent.py                                        0   83  "bounds.json: every field (einstein_q, einstein_C, boxes, mix) agrees with the independent recomputation" / "independent verification of the common-cutoff certificates: OK"
+independent.py --selfcheck                            0    7  "pinned a_1 checks: 3 mixtures" / "interval enclosure selfcheck: 6 windows x 3 interior q, 573003 exact rational entry comparisons against lower/upper/centre/radius: OK"
+independent.py --adversarial                          0   51  "l10_m15_R9: lambda 10, mu* 15, R^2 9: exact folded-form value -8.41646e+12 < 0 at q=3745657/100000000 (float block eigenvalue -0.392949)" / "l10_m15_R9: box [0.033058, 0.037457) and the point box at q_bad both refused, as the exact negativity requires" / the same two lines for l12_m12_R9 (-2.89796e+12 at q=9970489/100000000, box [0.081633, 0.099707)) and case1_k16 (lambda 3, mu* 2, R^2 9/4, -3.82551e+10 at q=16769/2000000, box [0.008264, 0.008385)) / "adversarial probes: every box with an exactly negative folded form was refused"
+independent.py --mutant endpoint                      1    3  "mutant refused: the Einstein form is not positive on [q_lo, q_ph): hot interval cannot be certified: 0.0083 0.00830000025397 K=16"
+independent.py --mutant coulomb                       1    1  "mutant refused: doubling mu* removes the cold sign at q=1/100 (form value 3.41541e+13 >= 0)"
+independent.py --mutant spectrum                      1    1  "mutant refused: the p -> 1-p mixture (int u dp != 1) is refused by the second-moment guard"
+independent.py --mutant receipt                       1   44  "mutant refused: a shaved C_E bracket escaped the receipt check: einstein-counterexample: stored C_E bracket does not contain the recomputed one [2092602200834679083090375451/250000000000000000000000000000, 8956148933378159032857474859/1000000000000000000000000000000] inside [16742817606677432664723/20000000000000000000000000, 223903723334453975821437/25000000000000000000000000]"
+structure.py                                          0    0  "structural checks passed on 400 rational two-line spectra (exact arithmetic)"
+structure.py --mutant                                 1    1  "mutant controls refused 36 perturbed statements (as required)"
+structure.py --folded                                 0    1  "folded identity (matrix form = display form) verified exactly in 120 rational trials"
+structure.py --folded --mutant                        1    0  "folded mutant: the display missing the tail term differs from the matrix in 120/120 trials (detected, as required)"
+crosscheck.py (NUMERICAL, float64)                    0   15  "full-line cross-check: every Einstein bracket reproduced and every mixture certified-unstable q_hi is numerically unstable with a strictly larger onset q (i.e. larger C_E) than the Einstein line of the same (lambda, M, mu*, omega_c); the direct even-sector eigenvalues agree with the folded form to float round-off" (band doubling N=240->480 shifts lam_max by <= 6.4e-05)
+crosscheck.py --mutant mirror                         1   17  "mutant "mirror": refused, because the direct and folded eigenvalues no longer agree (the agreement test has teeth)"
+crosscheck.py --mutant zshift                         1   17  "mutant "zshift": refused, because the direct and folded eigenvalues no longer agree (the agreement test has teeth)"
+
+The 20 rows above were produced by one batch script; every row's exit code is the code of
+the command itself, and the batch's wall time was 294 s (the second column is that row's
+own time). `independent.py` alone, run separately at the end, exits 0 in 37 s and prints the
+full table quoted in note 2.
+
+Notes.
+1. bounds.json was only read, never rewritten: every run above is in verify mode
+   (`--write` regenerates and was not used).
+2. independent.py's hot certificate covers [q_hi, q_ph) for every instance:
+   "[0.0095, 3.07269) in 19 certified boxes", "[0.003, 1.76999) in 36", "[0.003, 4.38414)
+   in 37", "[0.012, 0.518653) in 10", "[0.3105, 0.518653) in 12", "[0.4575, 3.07269) in
+   14", "[4.565, 12.2824) in 11"; and its C_E recomputations reproduce the RESULT.md
+   brackets outward (0.008371408803, 0.003376186186, 0.00127820346, 0.01684337597,
+   0.08832740877, 0.06205001997, 0.1074737872). The box counts are independent.py's own
+   outward count; replay.py's receipt pins a different (sparser) count per interval, and
+   check_receipt only requires the recomputation to be a positive integer.
+3. Superseded scripts are kept beside the fixed ones as crosscheck.v1.py,
+   independent.v1.py, independent.v2-rejected.py, independent.v3.py and replay.v1.py so the
+   reviews' line references still resolve; they are not run by anything above.
+4. Wall time on this machine: whole table 4.9 min (294 s), replay.py 31 s, its mutants
+   1-6 s, independent.py 83 s (37 s when run alone), --selfcheck 7 s, --adversarial 51 s,
+   independent.py mutants 1-44 s, structure.py and its mutants <1 s, crosscheck.py 15 s,
+   its mutants 17 s each.
+5. `independent.py --adversarial` is the regression mode for REVIEW2 R2-1/R2-2: it takes
+   the three documented probes (lambda, mu*, R^2) = (10, 15, 9), (12, 12, 9) and
+   (3, 2, 9/4), proves in exact rational arithmetic that the folded form is NEGATIVE at a
+   point q_bad of the documented box, and requires the corrected hot device to refuse both
+   the documented box and a point-wide box ending at q_bad. The rejected verifier
+   (independent.v2-rejected.py) returned CERTIFIED POSITIVE on all three; run its
+   `--adversarial`-equivalent by hand to reproduce the original false positives.
+6. `independent.py --selfcheck` is the regression mode for REVIEW3 R3-1: on six windows it
+   recomputes the head entries in EXACT rational arithmetic and requires
+   lower <= value <= upper, |value - centre| <= radius and centre_ii <= value_ii entrywise
+   (573003 comparisons, no float in the decision). To see its teeth, replay the round-3
+   formula on the same six windows: all 189950 off-diagonal entries violate
+   |SC*F - centre| <= radius (radius <= 0 everywhere) and the exact value exceeds
+   centre + radius by up to 45239 integer units at scale 2**17 (window r=3, lambda=10).
+   Both regression modes exit 0 on the current bytes and are listed above.
+7. No paid compute, no network beyond the uv wheel cache, no git operations, no push, no
+   email, no publication.
+8. Second full rerun of all 20 rows, 20 Nov 2026, after the two REVIEW4 P3 prose edits
+   (`RIGOR.md`, `FIX2.md` text only; `independent.py`, `replay.py`, `bounds.json`,
+   `fixtures.json` byte-identical to the round-4 bytes reviewed). Every row reproduced its
+   exit code of the table above, in 157 s total: replay.py 0 (21 s), its five mutants 1
+   (1-4 s), independent.py 0 (20 s), --selfcheck 0 (5 s), --adversarial 0 (21 s), its four
+   mutants 1 (1-19 s), structure.py 0 and its mutant 1 (<1 s each) plus --folded 0 / 1
+   (1 s), crosscheck.py 0 (15 s) and its two mutants 1 (14 s, 13 s). The adversarial run
+   refused all three REVIEW2 probes in exact arithmetic:
+   l10_m15_R9 -8.41646e+12 < 0 at q=3745657/100000000, l12_m12_R9 -2.89796e+12 < 0 at
+   q=9970489/100000000, case1_k16 -3.82551e+10 < 0 at q=16769/2000000, each with both its
+   documented box and its point box refused. The two checkers agree on the published
+   statements: replay.py reports C_E = 0.0083714088, 0.0033761862, 0.0012782035,
+   0.016843376, 0.088327409, 0.06205002, 0.10747379 with the stored q_E brackets, and
+   independent.py reproduces the same seven brackets outward in 19/36/37/10/12/14/11
+   certified boxes covering [q_hi, q_ph) for every instance.
+9. `C(1) in [0.11461945, 0.11461957]` is the upstream `C-LAMBDA/brackets.json` statement
+   (zero Coulomb); this lane reads it through the receipt and does not recompute it, and no
+   file in `C-LAMBDA` was modified by this repair.
