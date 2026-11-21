@@ -33,7 +33,7 @@ Recompute with `sha256sum paper/main.tex paper/refs.bib paper/main.pdf` before q
     cd paper
     tectonic -X compile paper/main.tex --keep-logs
 
-A clean from-scratch build (auxiliary files, `.bbl` and `.log` deleted first) was run on
+A clean rebuild (auxiliary files, `.bbl` and `.log` deleted first) was run on
 the final bytes. Result on the final bytes:
 
 | Check | Result |
@@ -60,8 +60,22 @@ Text is extracted from `paper/main.pdf` and matched case sensitively:
 | Byline | `Davis Rens`, `SuperMatics Inc.`, ORCID `0000-0001-5839-5197` |
 | `PROVISIONAL` in the PDF | `0` (the provisional flag lives in `CLAIMS.md` only, and no statement in the current section 8 remains provisional) |
 | Process language in the PDF | `0`: no `provisional`, `under repair`, `pending`, `being finished`, `currently sound`, `upgrade or replace`, `expected to be replaced` |
-| Lane, agent, machine and path names | none: no `C-LAMBDA`, `MUSTAR`, `CUTOFF-PAPER`, `D:/`, `C:/`, `scratch`, `.py`, `bounds.json`, `phase_scan`, lane or machine name. The word "agent" occurs only inside the AI disclosure sentence, as required by the template |
+| Record, agent, machine and path names | none: no source-record directory name, absolute path, working-directory shorthand, `.py`, data-file name or machine name. The word "agent" occurs only inside the AI disclosure sentence, as required by the template |
 | Labels present in the text | printed as small capitals `(proved)`, `(certified)`, `(numerical)`, `(open)`; the abstract defines all four and each is used with its stated meaning |
+
+## Released prose custody
+
+Every verification command, recorded exit code, verdict, quotation and mathematical statement
+in `records/` and in the two review documents is unchanged from the bytes that were checked in
+the working tree. The shipped copies differ only in how working locations are written: absolute
+working directories were abbreviated to repository-relative ones (`records/...`), temporary
+directories to `<temporary directory>`, log directories to `<logs>`, the TeX driver to
+`tectonic`, and the machine and process words were dropped. Line structure is unchanged, so
+every `file:line` pointer in `CLAIMS.md` still addresses the same sentence. The scripts,
+`bounds.json`, `fixtures.json` and everything under `paper/` are byte-identical to the checked
+bytes; the SHA-256 values declared inside `records/mustar-half/CHECKS.txt` and
+`records/mustar-half/FIX-INDEP.md` were recomputed for the shipped copies of `RESULT.md` and
+`RIGOR.md` after that abbreviation.
 
 ## Structure of the source
 

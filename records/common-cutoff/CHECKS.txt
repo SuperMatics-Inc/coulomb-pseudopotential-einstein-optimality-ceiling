@@ -1,11 +1,11 @@
-Common-cutoff lane (W/C-LAMBDA-MU/COMMON-CUTOFF), checks re-run 20 Nov 2026 on Davis's
-laptop (Windows 10.0.26200, CPython 3.13 through `uv run --no-project`).
+Common-cutoff record, checks re-run 20 Nov 2026 on the workstation
+(Windows, CPython 3.13 through `uv run --no-project`).
 
-Every command below is run from D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/COMMON-CUTOFF
-with the environment variable UV_CACHE_DIR=D:/dev/.cache/uv, so the exact form of each row
+Every command below is run from records/common-cutoff
+with the environment variable UV_CACHE_DIR=<uv cache>, so the exact form of each row
 is, for example,
 
-  UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy \
+  uv run --no-project --with numpy --with scipy \
     --with mpmath python -B replay.py
 
 Exit codes: 0 = the statement was verified. 1 = a mutant's perturbed statement was
@@ -92,5 +92,5 @@ Notes.
    independent.py reproduces the same seven brackets outward in 19/36/37/10/12/14/11
    certified boxes covering [q_hi, q_ph) for every instance.
 9. `C(1) in [0.11461945, 0.11461957]` is the upstream `C-LAMBDA/brackets.json` statement
-   (zero Coulomb); this lane reads it through the receipt and does not recompute it, and no
+   (zero Coulomb); this record reads it through the receipt and does not recompute it, and no
    file in `C-LAMBDA` was modified by this repair.

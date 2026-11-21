@@ -38,7 +38,7 @@ verifiers and checked against guarded mutants; the phase table is finite-precisi
 | `paper/` | `main.tex`, `refs.bib`, `main.pdf` (the released bytes); `main.v1.tex`, `main.v2.tex` are the diff bases reviewed by `reviews/REVIEW.md` and `reviews/REVIEW-S8.md` |
 | `CLAIMS.md`, `CLAIMS.v1.md`, `CLAIMS.v2.md` | statement-to-source map with one label per statement, and its two snapshots taken before the review rounds |
 | `reviews/` | the independent reviews of the manuscript text and the repair log (`REVIEW.md`, `REVIEW-S8.md`, `FIX-S8b.md`) |
-| `records/c-lambda/` | the zero-repulsion bracket record and the certified endpoints `records/*/bounds.json` rest on (`brackets.json`, `RESULT.md`, `RIGOR.md`) |
+| `records/C-LAMBDA/` | the zero-repulsion bracket record and the certified endpoints `records/*/bounds.json` rest on (`brackets.json`, `RESULT.md`, `RIGOR.md`) |
 | `records/common-cutoff/` | common-cutoff record: folded-form certificates, independent verifier, cross-check, adversarial probes, `CHECKS.txt` |
 | `records/common-cutoff-review/` | the independent review of that record |
 | `records/mustar-half/` | `mu* = 1/2` record: hot/cold certificates, `phase_scan.py`, `CHECKS.txt`, and the record's own review and repair logs |

@@ -76,7 +76,7 @@ Here $\infty$ means $4 R^2 < q_E(\lambda, 0)$, where the cutoff lies strictly be
 
 ## 5. Files and verification commands
 
-All files live in `D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/MUSTAR-HALF/`:
+All files live in `records/mustar-half/`:
 - `RIGOR.md`: Mathematical derivations, Lemma 1 and Theorems 1–5 (proof drafts), and exact rational/integer certificate specifications.
 - `RESULT.md`: This summary of status, theorems, sub-$1/2$ counterexamples, phase diagram, physical-extremity caveats, and open questions.
 - `FIX.md`: Per-finding repair log for `REVIEW.md` F3–F8 with file:line references and verification command exit codes.

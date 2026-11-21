@@ -1,7 +1,7 @@
 # FIX2 — `independent.py` hot-side repair (REVIEW2 R2-1, R2-2, R2-3; REVIEW3 R3-1…R3-4)
 
 Status: **fix applied, awaiting review.** Nothing here is self-certified `PROVED`/`CERTIFIED`;
-the labelling is the reviewer's call. No file outside this lane was modified; `replay.py`,
+the labelling is the reviewer's call. No file outside this record was modified; `replay.py`,
 `bounds.json`, `fixtures.json` and every `REVIEW*.md` are untouched.
 
 Rejected bytes are preserved as `independent.v2-rejected.py` (the version REVIEW2 audited).
@@ -29,7 +29,7 @@ re-verified in exact integer arithmetic or refused.
 | R3-3 `NaN`/overflow guards | `independent.v3.py:184,203,283` | `independent.py:198,218,310,330` | §5 item 4 |
 
 Two prose descriptions of the rejected hot device became false when it was replaced, and
-are corrected here (same lane, no other change): `RIGOR.md` §8 item 3 (the truncation list)
+are corrected here (same record, no other change): `RIGOR.md` §8 item 3 (the truncation list)
 and the `RESULT.md` Finding-2 paragraph (which also listed a non-existent `einstein_hi`
 receipt field and the old 15-box count; current fields are `einstein_q`, `einstein_C`,
 `boxes`, `mix`, and the count is 19). Neither correction changes a number.
@@ -175,7 +175,7 @@ on the same six windows violates the invariant on **189\,950 / 189\,950** off-di
 entries — `radius <= 0` on every one of them, `upper <= lower` on every one — with a maximum
 excess of $|2^{17}F_{ij}(q_{\rm mid})-C_{ij}|$ over $\mathcal R_{ij}$ of $45\,239$ integer
 units at scale $2^{17}$ (worst window $r=3$, $\lambda=10$)
-(throwaway probe `C:/t/CutoffFix2/r31_teeth.py`, deleted with the temp dir). The invariant
+(throwaway probe `<temporary>/r31_teeth.py`, deleted with the temp dir). The invariant
 is also the premise of §5 item 2, so the fix is load-bearing: on the round-3 bytes the
 "enclosure" certified nothing.
 
@@ -216,7 +216,7 @@ certificate changed.
 
 ## 3c. REVIEW4 (verdict PASS) — the two remaining P3 prose nits, now closed
 
-`COMMON-CUTOFF-REVIEW/REVIEW4.md` (20 Nov 2026, 16:14) records R3-1…R3-4 resolved on the
+`common-cutoff-review/REVIEW4.md` (20 Nov 2026, 16:14) records R3-1…R3-4 resolved on the
 current bytes, 20/20 `CHECKS.txt` rows at their expected exit codes, `--selfcheck` with
 teeth against `independent.v3.py`, the three REVIEW2 boxes plus the five round-4 probes
 refused, and **no claim shrinking**. It left two non-blocking P3 prose items; both are fixed
@@ -256,7 +256,7 @@ and a point-wide box ending at $q_{\rm bad}$ must be refused.
 `"adversarial probes: every box with an exactly negative folded form was refused"`.
 
 Rejected-verifier reproduction (`independent.v2-rejected.py`, loaded by path, same probe
-table; script kept only under `C:/t/CutoffFix2/repro_rejected.py` and deleted with it):
+table; script kept only under `<temporary>/repro_rejected.py` and deleted with it):
 
 ```
 l10_m15_R9: rejected verifier CERTIFIED POSITIVE on [0.033058, 0.037457) in 1 boxes (folded form is negative at q=3745657/100000000)
@@ -273,9 +273,9 @@ $q_{\rm bad}$ returned False — the false positives it produces are the documen
 
 ## 5. Every CHECKS.txt command, re-run
 
-All commands run from `C-LAMBDA-MU/COMMON-CUTOFF` with
-`UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy --with mpmath
-python -B <script>`, 20 Nov 2026, CPython 3.13 on Davis's laptop. Exit codes: 0 = verified,
+All commands run from `the bracket-and-mustar records/common-cutoff` with
+`uv run --no-project --with numpy --with scipy --with mpmath
+python -B <script>`, 20 Nov 2026, CPython 3.13 on the workstation. Exit codes: 0 = verified,
 1 = mutant refused as required, 2 = a mutant's control broke (never observed).
 
 | command | exit | key output |
@@ -339,10 +339,10 @@ its mutants 1-6 s; `independent.py` 83 s (37 s when run alone); `--selfcheck` 7 
 
 ## 7. Cleanup
 
-Scratch `C:/t/CutoffFix2/` (batch logs `runall.log`/`runall2.log`, `independent.out`, the
+Scratch `<temporary>/` (batch logs `runall.log`/`runall2.log`, `independent.out`, the
 round-4 rerun's `runchecks.sh` and `logs/` (20 per-row logs), and the throwaway probes,
-among them `repro_rejected.py` and `r31_teeth.py`), plus the exploratory `C:/t/CutoffFix2b/`
+among them `repro_rejected.py` and `r31_teeth.py`), plus the exploratory `<temporary>/`
 probe directory, were deleted after this file was written (`rmdir /s /q`, verified absent);
-no other temporary state was created, and nothing outside this lane was
+no other temporary state was created, and nothing outside this record was
 touched (`replay.py`, `bounds.json`, `fixtures.json`, `REVIEW*.md` are unchanged). No paid compute, no git operation, no push,
 no email, no publication.

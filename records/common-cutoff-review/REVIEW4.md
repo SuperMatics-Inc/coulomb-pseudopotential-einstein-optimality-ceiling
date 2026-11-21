@@ -1,8 +1,8 @@
-# Fourth-Round Independent Review of `COMMON-CUTOFF` (`REVIEW4.md`)
+# Fourth-Round Independent Review of `common-cutoff` (`REVIEW4.md`)
 
 **Final Verdict: PASS** (for `CERTIFIED` / `PROVED` status per claim table below).
 
-**Preprint readiness:** **YES — `COMMON-CUTOFF` is ready to be staged for the combined preprint with `MUSTAR-HALF`.** All four findings from `REVIEW3.md` (**R3-1, R3-2, R3-3, R3-4**) are cleanly resolved on current bytes. No P0, P1, or P2 defects remain. Both independent checkers (`replay.py` and `independent.py`) are sound, all 20 `CHECKS.txt` rows pass with their expected exit codes (0 broken controls), `--selfcheck` has verified teeth against `independent.v3.py`, five new round-4 adversarial probes pass/refuse as required, and **no claim shrinks**. (Two non-blocking P3 prose nits in `RIGOR.md:207, 398` are noted in §6 for optional polish during preprint assembly.)
+**Preprint readiness:** **YES — `common-cutoff` is ready to be staged for the combined preprint with `mustar-half`.** All four findings from `REVIEW3.md` (**R3-1, R3-2, R3-3, R3-4**) are cleanly resolved on current bytes. No P0, P1, or P2 defects remain. Both independent checkers (`replay.py` and `independent.py`) are sound, all 20 `CHECKS.txt` rows pass with their expected exit codes (0 broken controls), `--selfcheck` has verified teeth against `independent.v3.py`, five new round-4 adversarial probes pass/refuse as required, and **no claim shrinks**. (Two non-blocking P3 prose nits in `RIGOR.md:207, 398` are noted in §6 for optional polish during preprint assembly.)
 
 ---
 
@@ -42,7 +42,7 @@ In addition to `independent.py --adversarial` (exit 0) and the 5 round-3 probes,
 
 ## 4. Rerun of All 20 `CHECKS.txt` Commands
 
-Every command in `CHECKS.txt` was re-run verbatim from `D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/COMMON-CUTOFF` via `UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy --with mpmath python -B <cmd>` (total wall time 269.0 s; zero exit-2 broken controls):
+Every command in `CHECKS.txt` was re-run verbatim from `records/common-cutoff` via `uv run --no-project --with numpy --with scipy --with mpmath python -B <cmd>` (total wall time 269.0 s; zero exit-2 broken controls):
 
 | # | Command | Exit | Time | Observed Outcome |
 |---:|---|---:|---:|---|
@@ -94,4 +94,4 @@ Neither nit affects code soundness, proofs, or certificates.
 
 ## 7. Combined Preprint Readiness
 
-**Ready.** `COMMON-CUTOFF` meets the two-independent-sound-checkers bar and is ready to be staged for the combined preprint with `MUSTAR-HALF`.
+**Ready.** `common-cutoff` meets the two-independent-sound-checkers bar and is ready to be staged for the combined preprint with `mustar-half`.

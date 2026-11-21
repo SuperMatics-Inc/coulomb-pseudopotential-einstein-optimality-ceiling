@@ -2,7 +2,7 @@
 
 ## 1. Model, conventions, and exact folded stability form
 
-We work in the standard isotropic, flat-DOS ($N_0 = 1$), infinite-electronic-band linearized Migdal-Eliashberg model at the superconducting onset, in the exact conventions of [C-LAMBDA-MU](../RIGOR.md), [COMMON-CUTOFF](../COMMON-CUTOFF/RIGOR.md), and [C-LAMBDA](../../C-LAMBDA/RIGOR.md):
+We work in the standard isotropic, flat-DOS ($N_0 = 1$), infinite-electronic-band linearized Migdal-Eliashberg model at the superconducting onset, in the exact conventions of [the bracket-and-mustar records](../RIGOR.md), [common-cutoff](../common-cutoff/RIGOR.md), and [C-LAMBDA](../../C-LAMBDA/RIGOR.md):
 
 - Energies in absolute units; Matsubara frequencies $\omega_n = (2n+1)\pi k_B T$ for $n \in \mathbb{Z}$.
 - Coupling and second-moment parameters for a nonnegative spectral measure $\alpha^2 F(d\Omega)$ on $(0,\infty)$:

@@ -1,15 +1,16 @@
-# Verification commands and recorded exit codes for W/C-LAMBDA-MU/MUSTAR-HALF/
-# Working directory: D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/MUSTAR-HALF
+# Verification commands and recorded exit codes for records/mustar-half/
+# Working directory: records/mustar-half
 # Runner prefix:
-#   RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy python -B"
+#   RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 uv run --no-project --with numpy --with scipy python -B"
 # Every row below was rerun after the FIX-INDEP.md repair and again after REVIEW3 notes N1-N4.
-# Timings are wall seconds on the laptop. SHA256 of the verified artifacts:
+# Timings are wall seconds on the workstation. SHA256 of the shipped artifacts (recomputed
+# after the released RESULT.md and RIGOR.md abbreviated working locations; see BUILD.md):
 #   independent.py        26e1379c17f66e54626e7b481688a7134529c68525c9aa52584c615a5553110d
-#   RESULT.md             ddec869dca4088537a004f13083454af1a8337bcb7dd6a2ced06c9cae2b4188d
+#   RESULT.md             d30dc06c1d7449a134363e8c5afc6b8e19088ef181cf1a8dde9459f3fbcec062
 #   replay.py             d7f83656e0c6e47664519e4d1bb6acc6602473391dfc1c7d6b3642b08f58bbc4
 #   bounds.json           dfccb6776db72fc4c21443007a88a7b10f3fd7d0c281f14543f47f6959b8009c
 #   fixtures.json         bf1d6ca29dcf640ef99782d01ea34a9e5192b678e4b43610dc457acecad891ee
-#   RIGOR.md              cbf06f9c700be1af748c70ccb062bcf5a75789e9b744a54ba5b9f507a6a19989
+#   RIGOR.md              1f834afd3f0898f91daf1d6bd8a2eda556863efbfc677fcabc6c0252b65a29af
 #   structure.py          6d3b2dae169a936fadd7598ec90884ef781ee88bf93a3d17fdd365c002c31eae
 #   phase_scan.py         2c07a5837cab74b5eaf0ab86015e536b3ca04f29b553884d9177a87258a0ebaf
 

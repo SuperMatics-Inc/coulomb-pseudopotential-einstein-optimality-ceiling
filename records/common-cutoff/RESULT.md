@@ -6,7 +6,7 @@ Flat density of states, infinite electronic band, isotropic linearized Migdal-El
 pairing with a **pairing-only** Coulomb subtraction
 $\mu^* 1_{|\omega_n|<\omega_c}1_{|\omega_m|<\omega_c}$ (strict cutoff on **both**
 indices, no Coulomb term in the normal self-energy $Z$), in exactly the conventions of
-[C-LAMBDA-MU](../C-LAMBDA-MU/RIGOR.md). With the cutoff $\omega_c$ **common**
+[the bracket-and-mustar records](../the bracket-and-mustar records/RIGOR.md). With the cutoff $\omega_c$ **common**
 (spectrum independent, fixed per instance in units of $\sqrt M$, equivalently of
 $\Omega_E=\sqrt{M/\lambda}$ at fixed $(\lambda,M)$) and $\mu^*>0$ fixed, does the single
 Einstein line maximize the linear onset $T_{\rm lin}$ at fixed $(\lambda,M)$?
@@ -41,7 +41,7 @@ certified unstable at the quoted $q$ in exact rational arithmetic by an explicit
 rational trial vector.
 
 **Consequence for the campaign.** Under the *spectrum-dependent* cutoff
-$\omega_c=10\Omega_{\max}$, [C-LAMBDA-MU](../C-LAMBDA-MU/RESULT.md) showed the
+$\omega_c=10\Omega_{\max}$, [the bracket-and-mustar records](../the bracket-and-mustar records/RESULT.md) showed the
 supremum is degenerate and Einstein is not a maximizer; that degeneracy used a line of
 vanishing weight to open the cutoff. These counterexamples need **no** cutoff change:
 the cutoff is a property of the problem instance, not of the spectrum.
@@ -68,9 +68,9 @@ $C(1)=\sqrt q/2\pi\in[0.11461945,\,0.11461957]$. The $\mu^*=1/10$ row above give
 $C_E\in[0.088327408,\,0.088685156]$, **strictly below** the zero-Coulomb value: the
 pairing-only repulsion lowers the onset at fixed $(\lambda,M,\omega_c)$, which is the
 expected monotonicity, and the two numbers are different quantities. The zero-Coulomb
-threshold is *not* re-certified in this lane: the hot interval of §5 would be
+threshold is *not* re-certified in this record: the hot interval of §5 would be
 $[q_{\rm hi},q_{\rm ph})$ with $q_{\rm ph}(1)$ equal to that very bracket, hence empty
-here. What does tie the conventions together is the transfer kernel itself: this lane
+here. What does tie the conventions together is the transfer kernel itself: this record
 uses $a_r=\lambda\int u/(u+qr^2)\,dp$ with $a_0=\lambda$, the same $q=(2\pi
 k_BT/\Omega_E)^2$ and the same common cutoff, and `structure.py` re-checks the transfer
 weights in exact rationals.
@@ -101,7 +101,7 @@ weights in exact rationals.
 
 - **$\mu^*/\lambda>1/2$, $\omega_c\gtrsim\Omega_E$:** certified counterexamples above
   (0.67, 0.75, 1.0). Einstein is not optimal.
-- **$\mu^*/\lambda\le1/2$:** no counterexample was found in this lane; Einstein
+- **$\mu^*/\lambda\le1/2$:** no counterexample was found in this record; Einstein
   optimality is **open** there (the numerical control in the next section is consistent
   with it). The certified counterexamples sit at $\mu^*/\lambda\in\{2/3,3/4,1\}$, i.e.
   $\mu^*\in\{3/2,2,4\}$, which is outside the physical range of phonon-mediated
@@ -173,7 +173,7 @@ on this script.
 ## Checks run
 
 All scripts are `python -B` from this directory, NumPy/SciPy through
-`UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy --with mpmath`.
+`uv run --no-project --with numpy --with scipy --with mpmath`.
 
 | command | exit |
 |---|---|

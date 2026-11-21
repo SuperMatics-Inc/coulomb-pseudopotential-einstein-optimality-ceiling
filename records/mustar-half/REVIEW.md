@@ -1,9 +1,9 @@
-# Independent Review of `MUSTAR-HALF` (`REVIEW.md`)
+# Independent Review of `mustar-half` (`REVIEW.md`)
 
 **Overall Verdict: REJECT** (for `CERTIFIED` and `PROVED` status).
 
-**Executive Summary.** The central mathematical discovery is **genuine and verified**: in the sharp common-cutoff linearized Migdal-Eliashberg model (identical conventions to `COMMON-CUTOFF`), all four rational two-line spectra in `fixtures.json` / `bounds.json` are genuine sub-$1/2$ counterexamples ($\mu^*/\lambda \in \{0.478602, 0.48, 0.484815, 0.489\}$ at $\lambda \in [25.6, 28]$), independently confirmed on both folded and unfolded full-line eigenproblems with 7-digit truncation stability ($N = 300$ vs $600$), and **`replay.py` is mathematically and numerically sound** on both cold and hot sides. However, the package **cannot** currently carry `CERTIFIED` or `PROVED` labels due to **four P0 defects**:
-1. **`independent.py` hot verifier inherits two P0 soundness bugs from `COMMON-CUTOFF` `REVIEW2.md` (R2-1 and R2-2):** its entrywise off-diagonal lower bound is invalid on mixed-sign vectors at $\mu^* > 0$ (producing two reproducible false-positive certificates on provably unstable boxes), and its boundary tail penalty `pen` underestimates the single $j=m, i=m-1$ Schur-complement diagonal term by $19.85\times$ at $(\lambda, q_{\mathrm{lo}}, m) = (26, 10, 200)$.
+**Executive Summary.** The central mathematical discovery is **genuine and verified**: in the sharp common-cutoff linearized Migdal-Eliashberg model (identical conventions to `common-cutoff`), all four rational two-line spectra in `fixtures.json` / `bounds.json` are genuine sub-$1/2$ counterexamples ($\mu^*/\lambda \in \{0.478602, 0.48, 0.484815, 0.489\}$ at $\lambda \in [25.6, 28]$), independently confirmed on both folded and unfolded full-line eigenproblems with 7-digit truncation stability ($N = 300$ vs $600$), and **`replay.py` is mathematically and numerically sound** on both cold and hot sides. However, the package **cannot** currently carry `CERTIFIED` or `PROVED` labels due to **four P0 defects**:
+1. **`independent.py` hot verifier inherits two P0 soundness bugs from `common-cutoff` `REVIEW2.md` (R2-1 and R2-2):** its entrywise off-diagonal lower bound is invalid on mixed-sign vectors at $\mu^* > 0$ (producing two reproducible false-positive certificates on provably unstable boxes), and its boundary tail penalty `pen` underestimates the single $j=m, i=m-1$ Schur-complement diagonal term by $19.85\times$ at $(\lambda, q_{\mathrm{lo}}, m) = (26, 10, 200)$.
 2. **`RIGOR.md` §4.2 lists four completely different, stale two-line spectra** ($u_2 \in [1.55, 2.27]$) that contradict `fixtures.json`/`bounds.json`/`RESULT.md`, are **all strictly stable** ($\lambda_{\min} \in [+0.116, +0.294] > 0$, not counterexamples), and one of which violates $\int u\,dp = 1$ ($59525/59644 \neq 1$).
 3. **`RIGOR.md` Theorem 3 (`RESULT.md` Theorem 2, $k=1$ for $\mu^*/\lambda \le 1/2$) has a broken proof and a false intermediate theorem claim:** it asserts $h_0^* \ge h_1^* > \dots > 0$ for all $\lambda > 0$ at $\mu^*/\lambda \le 1/2$ using the false inequality $1 + \lambda - a_1 < 3 + a_1$. Explicitly refuted at $\lambda = 20, \mu^* = 10$ ($h_0^* = 0.5695 < h_1^* = 0.6094$, $\tilde{D}_1 - \tilde{D}_0 = -4.036 < 0$) and $\lambda = 50, \mu^* = 25$ ($h_0^* = 0.4115 < h_1^* = 0.6019$).
 4. **`RESULT.md` claims `PROVED (pending review)` for Theorems 3 and 4 (small-$\mu^*$ spectral gap stability and large-$\lambda$ fixed-$R$ optimality) that do not exist anywhere in `RIGOR.md`**, while `RIGOR.md` Theorem 2 ($k=0$ optimality) is false at exact equality $4R^2 = q_E(\lambda, 0)$ for any $\mu^* > 0$.
@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | 4 sub-$1/2$ counterexamples (`fixtures.json`, `bounds.json`) | `CERTIFIED` | **FAILS `CERTIFIED`** (core claim true) | `SINGLE-CHECKER CERTIFIED (replay.py only)` / `VERIFIED NUMERICALLY` | `replay.py` is sound and passes; independent recomputation confirms all 4 counterexamples. Fails `CERTIFIED` because `independent.py` hot verifier is unsound (**F1, F2**). |
 | 4 Einstein anchors (`fixtures.json`, `bounds.json`) | `CERTIFIED` | **FAILS `CERTIFIED`** | `SINGLE-CHECKER CERTIFIED (replay.py only)` | Same `independent.py` hot-side unsoundness (**F1, F2**); also 5/8 `RESULT.md` $C_E$ decimal entries are inward-rounded/stale (**F8**). |
-| `RIGOR.md` Lemma 1 (Finite-support decomposition) | `PROVED (pending review)` | **NEEDS CLEANUP** | `VERIFIED (formula 2' only)` | Formula `(2')` is algebraically exact, but display `(2)` is wrong ($2\times$ error) and draft scratch text (`?? Wait:`) remains in the proof (**F7**). |
+| `RIGOR.md` Lemma 1 (Finite-support decomposition) | `PROVED (pending review)` | **NEEDS CLEANUP** | `VERIFIED (formula 2' only)` | Formula `(2')` is algebraically exact, but display `(2)` is wrong ($2\times$ error) and draft unresolved text (`?? Wait:`) remains in the proof (**F7**). |
 | `RIGOR.md` Theorem 1 (Two-delta LP reduction) | `PROVED (pending review)` | **MINOR GAP** | `SKETCHED (fixable)` | Conclusion is true, but proof claims $\Phi_{h,q}(u)$ is bounded on $(0,\infty)$ for all $h \in \mathcal{D}(\mathcal{F})$ using $\frac{u}{u+qj^2} \le \frac{u}{qj^2}$ (grows linearly in $u$). Fix: restrict to finitely supported core (**F6**). |
 | `RIGOR.md` Theorem 2 / `RESULT.md` Theorem 1 ($k=0$ mask) | `PROVED (pending review)` | **FALSE AT BOUNDARY** | `PROVED FOR STRICT 4R^2 < q_E(lambda, 0)` | Fails at exact equality $4R^2 = q_E(\lambda, 0)$ for any $\mu^* > 0$, where $k(q,R) \ge 1$ on $q < q_E(\lambda,0)$ pushes $q_{\mathrm{lin}}(\delta_1) < q_E(\lambda, 0)$ (**F5**). |
 | `RIGOR.md` Theorem 3 / `RESULT.md` Theorem 2 ($k=1$, $\mu^*/\lambda \le 1/2$) | `PROVED (pending review)` | **PROOF BROKEN / MONOTONICITY FALSE** | `CONJECTURED / NUMERICAL` (proved only for $2\mu^* \le 2 + 2a_1$) | Claimed $h_0^* \ge h_1^*$ and inequality $1+\lambda-a_1 < 3+a_1$ are explicitly false for $\lambda \ge 20$ (**F4**). |
@@ -32,7 +32,7 @@
 ### 2.1 `replay.py` — **SOUND** (Cold and Hot Sides)
 Line-by-line audit of `replay.py`:
 - **Cutoff & windows (`replay.py:49-60`):** `cutoff(q, scale2)` computes `(isqrt(up(F(4*scale2)/q) - 1) + 1) // 2`, which is exact for all rational $q, R^2 > 0$ including $k = 0$ (when $4R^2 \le q$). `windows(lo, hi, scale2)` partitions `[lo, hi)` at exact mask-jump points $4R^2/(2k-1)^2$ so $k$ is constant on every half-open subinterval.
-- **Hot head & signed interval enclosure (`replay.py:95-140`):** Identical architecture to `COMMON-CUTOFF/replay.py` (audited sound in `REVIEW2.md` §2.1). Computes exact entrywise `lower <= S * F_PP(q) <= upper` over $q \in [\text{left}, \text{right}]$, forms `center = (lower + upper) // 2` and `radius = upper - center` (so $|S F_{PP}(q) - \text{center}| \le \text{radius}$ entrywise), and subtracts weighted Gershgorin diagonal penalty `ceil((radius @ lin)_i / lin_i)`. Valid for **all** real vectors $x$, including mixed-sign vectors when $\mu^* > 0$.
+- **Hot head & signed interval enclosure (`replay.py:95-140`):** Identical architecture to `common-cutoff/replay.py` (audited sound in `REVIEW2.md` §2.1). Computes exact entrywise `lower <= S * F_PP(q) <= upper` over $q \in [\text{left}, \text{right}]$, forms `center = (lower + upper) // 2` and `radius = upper - center` (so $|S F_{PP}(q) - \text{center}| \le \text{radius}$ entrywise), and subtracts weighted Gershgorin diagonal penalty `ceil((radius @ lin)_i / lin_i)`. Valid for **all** real vectors $x$, including mixed-sign vectors when $\mu^* > 0$.
 - **Tail diagonal & Schur complement (`replay.py:99-101, 124-139`):** Enforces `k <= n` (no Coulomb in $F_{QQ}$) and $n^2 \ge 2b$ ($b = \lambda/\text{left}$), guaranteeing $F_{QQ} \succeq \operatorname{diag}(j+1)$ on $j \ge n$. Near tail ($n \le j < 2n$) is bounded via weighted Cauchy-Schwarz with `quad`; far tail ($j \ge 2n$) uses `far_lump(b, n, sum(h)) = 25*b^2*sum(h)/(4*(2n)^4)`. Exact.
 - **Exact integer Cholesky & matvec (`replay.py:36-46, 162-179`):** `matvec` checks `max_a * max_x * cols + extra < 2**62` with Python `int` fallback (no silent clamping). `gram_positive` casts `L = np.rint(l * G).astype(np.int64)`, checks overflow guards before `L @ L.T`, `a * (G*G//S)`, and `abs(res).sum(axis=1)`, and certifies strict diagonal dominance of `res`.
 - **Cold side (`replay.py:151-159`):** `different = (x < 0)[:, None] != (x < 0)` selects `hi` on opposite-sign pairs ($x_i x_j < 0$) and `lo` on same-sign pairs ($x_i x_j \ge 0$), upper-bounds the normal self-energy diagonal with `hi` and the Coulomb term with `up(2*mu*S)`, and uses `k = min(cutoff(q, scale2), n)` (exact for $x$ supported on $0 \dots n-1$).
@@ -40,7 +40,7 @@ Line-by-line audit of `replay.py`:
 
 ### 2.2 `independent.py` — **COLD SIDE SOUND; HOT SIDE UNSOUND (P0)**
 - **Cold side (`independent.py:186-210`) & Hutton $\pi$ (`independent.py:213-230`):** Sound and genuinely independent of `replay.py` (evaluates the unfolded full Matsubara line $n \in \{-N_C, \dots, N_C-1\}$ in exact `Fraction` arithmetic without using the folded identity, and computes 90-term Hutton $\pi$ enclosures).
-- **Hot side (`independent.py:116-172`):** **UNSOUND** — fails both **R2-1** (Finding **F1**) and **R2-2** (Finding **F2**), with a minor residual overflow window in **R2-3** (Finding **F9**). Because `independent.py`'s hot verifier is unsound, `MUSTAR-HALF` lacks a valid second independent hot certificate.
+- **Hot side (`independent.py:116-172`):** **UNSOUND** — fails both **R2-1** (Finding **F1**) and **R2-2** (Finding **F2**), with a minor residual overflow window in **R2-3** (Finding **F9**). Because `independent.py`'s hot verifier is unsound, `mustar-half` lacks a valid second independent hot certificate.
 
 ---
 
@@ -56,7 +56,7 @@ Line-by-line audit of `replay.py`:
 
 ### F2. [P0] `independent.py` `hot_bound` tail penalty `pen` underestimates the boundary Schur complement by $O(m)$ (REVIEW2 defect R2-2)
 - **Location:** `independent.py:144-150`
-- **Issue:** Although `independent.py` fixes two of `COMMON-CUTOFF`'s R2-2 bugs (it passes `m = NB // 2` to `tail_gap` and subtracts `pen` on the diagonal), its penalty formula
+- **Issue:** Although `independent.py` fixes two of `common-cutoff`'s R2-2 bugs (it passes `m = NB // 2` to `tail_gap` and subtracts `pen` on the diagonal), its penalty formula
   $$\mathrm{pen}[i]/\mathrm{SC} = \frac{2 m}{g} \cdot \frac{2\lambda}{q_{\mathrm{lo}}(m-i)^2} \cdot \frac{2\lambda}{q_{\mathrm{lo}} m^2}$$
   is **mathematically invalid**. The factor $\eta_0 = 2\lambda/(q_{\mathrm{lo}} m^2)$ causes `pen[m-1]/SC` to decay as $O(1/(m g))$, whereas at the block boundary $i = m - 1, j = m$ we have $|j - i| = 1$, so $B_{m, m-1} = a_1(q_{\mathrm{lo}}) + a_{2m}(q_{\mathrm{lo}}) = O(1)$ and the true Schur-complement diagonal $(B^T F_{QQ}^{-1} B)_{m-1, m-1} \ge B_{m, m-1}^2 / F_{QQ, mm} = O(1/g)$ does **not** carry the extra $1/m$ factor.
 - **Evidence:** At $\lambda = 26, q_{\mathrm{lo}} = 10, m = 200$: `independent.py` computes `pen[m-1]/SC = 6.881e-4`, whereas just the single $(j=m, i=m-1)$ term $B_{m, m-1}^2 / F_{QQ, mm} = 1.366 \times 10^{-2}$ is **$19.85\times$ larger** than the claimed upper bound.
@@ -97,7 +97,7 @@ Line-by-line audit of `replay.py`:
 ### F7. [P2] Unfinished draft text and wrong display `(2)` in `RIGOR.md` Lemma 1; minor phrasing slip in Theorem 4
 - **Location:** `RIGOR.md:36-48, 100`
 - **Issue:** Lemma 1 displays the wrong formula `(2)` (missing factor $1/2$ on the Hankel sum and extra factor $2$ on the Toeplitz sum) followed by draft self-correction text (`?? Wait:`), then gives the correct `(2')`. Also `RIGOR.md:100` writes `- \sum_{m=0}^{i-1}(missing)` for the off-diagonal row sum, which is actually identically $2\sum_{j=1}^\infty a_j - a_{2i+1}$ (so subtracting from $2i+1 + 2\sum_{j=1}^i a_j - a_{2i+1}$ gives $(2i+1) - 2\sum_{j=i+1}^\infty a_j \ge (2i+1) - 2\sum_{j=1}^\infty a_j$).
-- **Fix:** Replace `(2)` directly with `(2')`, remove all `?? Wait:` draft scratch text, and clean up line 100.
+- **Fix:** Replace `(2)` directly with `(2')`, remove all `?? Wait:` draft unresolved text, and clean up line 100.
 
 ### F8. [P2] `RESULT.md` $C_E$ decimal tables are inward-rounded / stale relative to `bounds.json` on 5 of 8 entries
 - **Location:** `RESULT.md:27-40`
@@ -111,14 +111,14 @@ Line-by-line audit of `replay.py`:
 
 ### F9. [P2] `independent.py` `positive()` has a residual `int64` subtraction overflow window (REVIEW2 defect R2-3 partial)
 - **Location:** `independent.py:151, 163-168`
-- **Issue:** Unlike `COMMON-CUTOFF/independent.py`, line 163 properly casts `Lh = np.rint(L * GS).astype(np.int64)`. However, line 151 permits `|A| < 2**35` with `factor = GS*GS // SC = 2**28`, so `|A * factor|` can approach $2^{63}$, and subtracting `Lh @ Lh.T` (bounded by $2^{62}$) in `res = A * factor - Lh @ Lh.T` can overflow signed `int64` ($2^{63}-1$) on large-entry blocks (not triggered on the 8 current fixtures, where `|A|` is well below $2^{35}$).
+- **Issue:** Unlike `common-cutoff/independent.py`, line 163 properly casts `Lh = np.rint(L * GS).astype(np.int64)`. However, line 151 permits `|A| < 2**35` with `factor = GS*GS // SC = 2**28`, so `|A * factor|` can approach $2^{63}$, and subtracting `Lh @ Lh.T` (bounded by $2^{62}$) in `res = A * factor - Lh @ Lh.T` can overflow signed `int64` ($2^{63}-1$) on large-entry blocks (not triggered on the 8 current fixtures, where `|A|` is well below $2^{35}$).
 - **Fix:** Tighten the guard in `hot_bound` to `int(np.abs(A).max()) < 2**33` (so `|A * factor| < 2**61` and `|A * factor - Lh @ Lh.T| < 2**62 + 2**61 < 2**63`).
 
 ---
 
 ## 4. `CHECKS.txt` Rerun Table (All 15 Commands)
 
-Re-run in `D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/MUSTAR-HALF` with the exact `RUN` prefix from `CHECKS.txt`:
+Re-run in `records/mustar-half` with the exact `RUN` prefix from `CHECKS.txt`:
 
 | Command | Exit | Observed Outcome |
 |---|---:|---|
@@ -146,7 +146,7 @@ Re-run in `D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/MUSTAR-HALF` with the exa
 |---|---|---|---|---|
 | **R2-1 smoking gun 1** | $\lambda=10, \mu^*=15, R^2=9$, box $[0.033058, 0.037457)$, $q_{\mathrm{bad}}=3745657/10^8$ ($k=16$) | Unstable ($\lambda_{\min} = -0.392949$) | **REFUSED (`False`)** | **FALSE POSITIVE (`True`, 1 box)** |
 | **R2-1 smoking gun 2** | $\lambda=12, \mu^*=12, R^2=9$, box $[0.081633, 0.099707)$, $q_{\mathrm{bad}}=9970489/10^8$ ($k=10$) | Unstable ($\lambda_{\min} = -0.140239$) | **REFUSED (`False`)** | **FALSE POSITIVE (`True`, 1 box)** |
-| **Unstable Einstein box (`MUSTAR-HALF`)** | $\lambda=26, \mu^*=312/25, R^2=53/5$, box $[0.490, 0.505)$, $q_{\mathrm{bad}}=0.495$ ($k=5$) | Unstable ($\lambda_{\min} = -3.96\times 10^{-4}$) | **REFUSED (`False`)** | **REFUSED (`False`)** |
+| **Unstable Einstein box (`mustar-half`)** | $\lambda=26, \mu^*=312/25, R^2=53/5$, box $[0.490, 0.505)$, $q_{\mathrm{bad}}=0.495$ ($k=5$) | Unstable ($\lambda_{\min} = -3.96\times 10^{-4}$) | **REFUSED (`False`)** | **REFUSED (`False`)** |
 | **Perturbed non-counterexample** | `subhalf-26-12over25` at $q=13/25$ with $(u_1, u_2, p) = (99/100, 10000, 1/999901)$ | Stable ($\lambda_{\min} = +8.76\times 10^{-4}$) | **REFUSED (`False`)** | **REFUSED (`False`)** |
 | **R2-2 boundary Schur diagonal** | $\lambda=26, q_{\mathrm{lo}}=10, m=200$, single term $B_{m,m-1}^2 / F_{QQ,mm}$ | True term $= 1.366\times 10^{-2}$ | Bounded via exact `near` | **`pen[m-1]/SC = 6.881e-4` ($19.85\times$ too small)** |
 
@@ -163,14 +163,14 @@ Independent folded ($N=300, 600$) and unfolded full-line ($2N=600$, retaining $a
 | `subhalf-27-0p4848` | $0.484815$ | $0.62222222$ | $0.41652893$ | $0.56093575$ (interior) | $1.16047009$ vs $1.16047016$ ($+16.05\%$) | $0.99903242 < 1$ vs $1.00017277 > 1$ |
 | `subhalf-28-0p489` | $0.489000$ | $0.61234568$ | $0.40991736$ | $0.57220079$ (interior) | $1.18147915$ vs $1.18147918$ ($+18.15\%$) | $0.99812356 < 1$ vs $1.00035749 > 1$ |
 
-- **Conventions:** Identical to `COMMON-CUTOFF` ($c_n = \mathbf{1}_{(2n+1)^2 q < 4R^2}$, strict inequality, pairing-only $\mu^*$, common $R = \omega_c/\Omega_E$).
+- **Conventions:** Identical to `common-cutoff` ($c_n = \mathbf{1}_{(2n+1)^2 q < 4R^2}$, strict inequality, pairing-only $\mu^*$, common $R = \omega_c/\Omega_E$).
 - **Truncation sensitivity:** Not a truncation artefact ($N=300$ and $N=600$ agree to 7 significant figures, and `replay.py` certifies on infinite $\ell^2(\mathbb{Z}_{\ge 0})$).
 - **Role of the mask discontinuity:** For `subhalf-26-12over25` at fixed $k=5$, Einstein is unstable at $q = 0.495$ ($\lambda_{\min} = -4.0\times 10^{-4}$), enters a narrow stable island on $[0.501, 0.5234]$ ($\lambda_{\min} \in [+2.0, +9.0]\times 10^{-4}$), and becomes unstable *again* on $[0.55, 0.70]$ ($\lambda_{\min} \approx -6.6\times 10^{-3}$). The sharp $k = 5 \to 4$ cutoff jump at $q = 4R^2/81 = 0.523457$ (where $\lambda_{\min}(k=4) = +3.273$) truncates Einstein's upper $k=5$ unstable branch, leaving Einstein stable for all $q \ge 0.501$ while the two-line mixture is unstable inside Einstein's stable island. Thus the counterexample is mathematically exact in the sharp-cutoff model, **but** physically depends on the sharp Matsubara step discontinuity.
 
 ---
 
-## 7. Physical Framing and Preprint Combination with `COMMON-CUTOFF`
+## 7. Physical Framing and Preprint Combination with `common-cutoff`
 
 - **Model-class membership vs physical realism:** Mathematically, $\lambda \in [25.6, 28]$ and two-delta spectra with $\theta \sim 10^{-5}\text{--}3.6\times 10^{-4}$ at $u_2 \in [1000, 20000]$ lie strictly inside the stated model class $\mathcal{P}_1 = \{p \text{ on } (0,\infty) : \int u\,dp = 1\}$ with $\lambda > 0$. Physically, however, $\lambda \sim 26$ is far outside the realistic Migdal-Eliashberg regime ($\lambda \lesssim 2\text{--}3$), $u_2 = 20000$ places a tiny spectral weight at $\Omega_2 \approx 141\,\Omega_E \gg \omega_c$, and the mechanism relies on the sharp Matsubara step-mask jump $k = 5 \to 4$.
 - **Headline scoping:** The headline that $\mu^*/\lambda = 1/2$ is **not** a universal threshold is mathematically true and genuinely surprising, provided it is explicitly scoped to the sharp common-cutoff linearized Eliashberg model in the ultra-strong-coupling $k=5$ re-entrant fold ($\lambda \in [25.55, 34]$) with extreme high-frequency-tail two-delta spectra (and noting that no counterexample is observed below $\lambda \approx 25.55$ or for $k \in \{0, 1, 2, 3, 4\}$).
-- **Combining `MUSTAR-HALF` with `COMMON-CUTOFF` into one preprint:** **YES — strongly recommended, once the P0 defects are fixed.** Both packages share the exact same model, conventions, and `replay.py` certification engine, and both currently fail review for the exact same `independent.py` hot-verifier bugs (R2-1, R2-2). Fixing `independent.py` once with a sound signed-matrix hot verifier, correcting `RIGOR.md` §4.2 and Theorems 1–3, and synchronizing `RESULT.md` produces a single, cohesive, substantially stronger preprint: Einstein optimality fails above $\mu^*/\lambda = 1/2$ (`COMMON-CUTOFF`), *and* even $\mu^*/\lambda = 1/2$ is broken in the sharp-cutoff model by the $k=5$ re-entrant fold (`MUSTAR-HALF`).
+- **Combining `mustar-half` with `common-cutoff` into one preprint:** **YES — strongly recommended, once the P0 defects are fixed.** Both packages share the exact same model, conventions, and `replay.py` certification engine, and both currently fail review for the exact same `independent.py` hot-verifier bugs (R2-1, R2-2). Fixing `independent.py` once with a sound signed-matrix hot verifier, correcting `RIGOR.md` §4.2 and Theorems 1–3, and synchronizing `RESULT.md` produces a single, cohesive, substantially stronger preprint: Einstein optimality fails above $\mu^*/\lambda = 1/2$ (`common-cutoff`), *and* even $\mu^*/\lambda = 1/2$ is broken in the sharp-cutoff model by the $k=5$ re-entrant fold (`mustar-half`).

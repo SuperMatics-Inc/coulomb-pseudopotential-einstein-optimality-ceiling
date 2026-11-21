@@ -1,4 +1,4 @@
-# FIX-S8b - repairs for `REVIEW-S8.md` (`CUTOFF-PAPER`)
+# FIX-S8b - repairs for `REVIEW-S8.md`
 
 Status: **D1 to D4 applied exactly as stated; clean rebuild done; text checks re-run.**
 `REVIEW-S8.md` reports PASS-WITH-FIXES with zero P0 and zero P1. No statement, label,
@@ -12,9 +12,9 @@ Backups of the pre-fix bytes: `main.v2.tex` (source) and `CLAIMS.v2.md` (claim m
 
 | Item | Fix | Location after fix | Evidence the wording now matches |
 |---|---|---|---|
-| **D1** | first verifier hot head size `m=200` changed to `n=240`; the second verifier keeps `m=200` | `main.tex:725` | `MUSTAR-HALF/fixtures.json` sets `size_hot: 240` for all eight instances and `replay.py` builds `Folded(int(data['size_hot']))`; only the second verifier's enclosure uses 200, as `REVIEW3.md:45` records |
+| **D1** | first verifier hot head size `m=200` changed to `n=240`; the second verifier keeps `m=200` | `main.tex:725` | `mustar-half/fixtures.json` sets `size_hot: 240` for all eight instances and `replay.py` builds `Folded(int(data['size_hot']))`; only the second verifier's enclosure uses 200, as `REVIEW3.md:45` records |
 | **D2** | the four quoted second-verifier margins are now stated to be in that verifier's `2^22`-scaled integer units, each backed by a strictly positive integer Gershgorin gap; the entrywise-bound witness now states that both quadratic forms, `+565.9e12` for the rejected lower bound and `-85.47e12` for the folded form, are taken on the same `2^22` integer scale | `main.tex:741`, `main.tex:761` | `REVIEW3.md:65` (finding N3) and the second verifier's own printing at `independent.py:333,400`, `gap.min()/factor`; `CHECKS.txt:26` prints `x^T SC*F(q_bad)x = -85.47e12`, and the rejected matrix is `lower.copy()` at `independent.py:859`, so both forms share the scale |
-| **D3.1** | `All twenty recorded commands` changed to `All twenty-one recorded commands` in the Section 8 proof | `main.tex:770` | `MUSTAR-HALF/CHECKS.txt` records 21 `$RUN` rows (6 `replay.py`, 11 `independent.py`, 2 `structure.py`, 2 `phase_scan.py`) |
+| **D3.1** | `All twenty recorded commands` changed to `All twenty-one recorded commands` in the Section 8 proof | `main.tex:770` | `mustar-half/CHECKS.txt` records 21 `$RUN` rows (6 `replay.py`, 11 `independent.py`, 2 `structure.py`, 2 `phase_scan.py`) |
 | **D3.2** | `each program also refuses when all of its mutants are run together` narrowed to the structural checker, which refuses when all three of its mutants are run together | `main.tex:753` | only `structure.py` has a combined-mutant mode (`--mutant all`); `replay.py` and `independent.py` take one named mutant per invocation, `independent.py:36` |
 | **D3.3** | `A sixth self-test` changed to `A self-test` | `main.tex:766` | the preceding text numbers no earlier self-tests, so the ordinal had no referent |
 | **D4.1** | abstract now says the four below-one-half counterexamples are `certified by a second pair of independent exact verifiers in the same two roles`, instead of `by the same two verifiers` | `main.tex:52` | consistent with `main.tex:1180-1183` (Section 9 item 6) and with the data-availability paragraph, which describes a separate pair of verifiers for Section 8 |
@@ -31,8 +31,8 @@ flagged only the Section 8 count.
 
 ## Rebuild and checks
 
-From-scratch Tectonic (`main.aux`, `.bbl`, `.blg`, `.log`, `.out`, `.toc` deleted first),
-`D:/dev/tools/tectonic/tectonic.exe -X compile --keep-logs main.tex`:
+Clean Tectonic (`main.aux`, `.bbl`, `.blg`, `.log`, `.out`, `.toc` deleted first),
+`tectonic -X compile --keep-logs main.tex`:
 
 | Check | Result |
 |---|---|
@@ -47,7 +47,7 @@ From-scratch Tectonic (`main.aux`, `.bbl`, `.blg`, `.log`, `.out`, `.toc` delete
 | `This preprint has not been peer reviewed.` | present, once |
 | AI disclosure | present, once |
 | Byline and ORCID | present |
-| Process language and path or lane names | `0` occurrences |
+| Process language and path or record names | `0` occurrences |
 
 Bytes at this build:
 

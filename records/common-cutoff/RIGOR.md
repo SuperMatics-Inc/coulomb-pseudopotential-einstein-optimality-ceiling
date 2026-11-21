@@ -4,7 +4,7 @@
 
 Flat density of states $N_0$, infinite electronic band, isotropic even linear
 Migdal-Eliashberg pairing at the onset, in the conventions of
-[C-LAMBDA-MU](../C-LAMBDA-MU/RIGOR.md) and [C-LAMBDA](../../C-LAMBDA/RIGOR.md):
+[the bracket-and-mustar records](../the bracket-and-mustar records/RIGOR.md) and [C-LAMBDA](../../C-LAMBDA/RIGOR.md):
 
 - energies in absolute units, Matsubara frequencies $\omega_n=(2n+1)\pi k_BT$;
 - $\lambda=2\int_0^\infty\alpha^2F(\omega)\omega^{-1}d\omega$,
@@ -353,7 +353,7 @@ larger $\mu^*$ buys more near-zone suppression for the same mass penalty.
 
 The examples all satisfy $\mu^*/\lambda>1/2$ ($2/3$, $3/4$, $1$). At
 $\mu^*\le\lambda/2$ the Coulomb block is small enough that the near-zone instability is
-the binding one in every configuration tested in this lane, but no proof is offered
+the binding one in every configuration tested in this record, but no proof is offered
 here and the question is recorded as open.
 
 ## 8. Scope and honest qualifications
@@ -372,7 +372,7 @@ here and the question is recorded as open.
    interval centre plus a radius dominated on the diagonal, and eliminates the whole
    infinite tail by its exact Schur complement against a uniform Gershgorin gap (§5). Band
    doubling in `crosscheck.py`, and the head doubling already reported in the parent
-   lane, moves the thresholds by float round-off only.
+   record, moves the thresholds by float round-off only.
 4. **Physical reach of $\mu^*/\lambda>1/2$.** The three counterexamples sit at
    $\mu^*/\lambda\in\{2/3,3/4,1\}$, i.e. $\mu^*\in\{3/2,2,4\}$. That is far outside the
    conventional range of phonon-mediated superconductors, where
@@ -406,6 +406,6 @@ here and the question is recorded as open.
    flips no sign. Reported as NUMERICAL evidence for the ordering only; the certified
    chain does not depend on this script.
 6. No literature claim is made. Rens arXiv:2611.20496 Thms. 3, 4, 6 and Kondratev
-   Prop. 1/§12 are zero-Coulomb results (see the C-LAMBDA-MU review); nothing there
+   Prop. 1/§12 are zero-Coulomb results (see the the bracket-and-mustar records review); nothing there
    settles the positive-$\mu^*$ common-cutoff question, which these counterexamples
    answer negatively.

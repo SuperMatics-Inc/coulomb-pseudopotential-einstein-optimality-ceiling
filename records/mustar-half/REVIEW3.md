@@ -1,4 +1,4 @@
-# Independent Re-Review of `MUSTAR-HALF` (`REVIEW3.md`)
+# Independent Re-Review of `mustar-half` (`REVIEW3.md`)
 
 **Overall Verdict: PASS** (all 9 prior findings **F1–F9** from `REVIEW.md` are resolved; zero P0 or P1 findings remain; four non-blocking P2/P3 hardening/polish items noted below).
 
@@ -66,9 +66,9 @@ Zero **P0** or **P1** findings. Four non-blocking **P2/P3** items:
 
 ## 4. Rerun Table and Extra Adversarial Checks
 
-Runner prefix (working directory `D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/MUSTAR-HALF`):
+Runner prefix (working directory `records/mustar-half`):
 ```bash
-RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy python -B"
+RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 uv run --no-project --with numpy --with scipy python -B"
 ```
 
 | Command | Expected Exit | Observed Exit | Key Output / Wall Time |
@@ -87,6 +87,6 @@ RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 UV_CACHE_DIR=D:/
 | `$RUN structure.py` | 0 | **0** | 40 random rational trials + F4 refutation witnesses passed |
 | `$RUN structure.py --mutant` (and `f4`, `coulomb`, `norm`) | 1 | **1** | All 4 commands exited 1 (`REFUSED`) |
 
-**Additional independent adversarial probes (in `C:/t/MuStarReview3`, deleted after run):**
+**Additional independent adversarial probes (in `<temporary>/`, deleted after run):**
 1. Perturbed `subhalf-26-12over25` mixture past the $k = 5 \to 4$ jump ($q = 53/100 = 0.53 > 4 R^2 / 81 = 0.523457$): `cold_value` returned $+2.7069\times 10^{15} > 0$ ($\text{ray} = 0.779930 < 1$) $\to$ **refused**.
 2. Unstable Einstein point just below $q_E$ for `subhalf-25p6-0p4786` ($q = 0.522$, exact folded value $-1.3007\times 10^9 < 0$, $\lambda_{\min} = -6.7\times 10^{-5}$): `positive(hot_head(..., 0.5219, 0.5221))` returned `None` $\to$ **refused**.

@@ -1,4 +1,4 @@
-# FIX-INDEP — `independent.py` hot-side repair for `MUSTAR-HALF` (`REVIEW.md` F1, F2, F9)
+# FIX-INDEP — `independent.py` hot-side repair for `mustar-half` (`REVIEW.md` F1, F2, F9)
 
 Status: **hot side rebuilt as a sound enclosure; all 8 instances (4 sub-$1/2$ counterexamples + 4 Einstein anchors) CERTIFIED by `independent.py` alone; every mutant refused.**
 Per project rules nothing here is labelled `PROVED` or `CERTIFIED` at the result level; the per-instance word below is `CERTIFIED` in the narrow sense "this checker's exact-arithmetic certificate covers every box of $[q_E(\lambda,0),\,4\lambda)$", which is what `RESULT.md` §2 quotes for the second checker.
@@ -17,7 +17,7 @@ Backups, not overwritten: `independent.v1-rejected.py` (review-era unsound devic
 | **F2** | **P0** | The tail penalty used a single scalar gap $g \approx 2m$ per row, i.e. $O(1/(mg))$, which underestimates the **boundary** Schur complement $B_{m,m-1}^2/g_m$ by $O(m)$: the row $j=m$ couples to the head through $b_{m-1,m} = a_1 + a_{2m}$, the $\lvert j-i\rvert = 1$ term. | Replaced by the per-row Gershgorin gap of the tail, `tail_gaps`, which keeps $g_m = 2m + O(1)$ at the boundary row (each $A_r$ accumulated as an outward-rounded integer sum, all subtracted terms bounded at $lo$, added terms at $hi$, the two tail sums closed by $\lambda/(q r^2)$ with $\sum_{r\ge T} r^{-2} \le 1/(T-1)$), and by the Cauchy–Schwarz column bound `tail_penalty` with free weights $h_i = 2^{22}/(i+1)$, so each boundary column keeps its true weight rather than an averaged one. | `independent.py:138-189` (`tail_gaps`), `:191-232` (`tail_penalty`), `:474-495` (`hot_claim`) |
 | **F9** | **P2** | Residual `int64` subtraction overflow windows in `positive()` (and unguarded row sums/column shifts elsewhere). | Every `int64` product is now **guarded, never assumed**: `positive` requires `int64` dtype, exact symmetry, finite float proposals, refuses `NaN/inf` casts, bounds `|A|*factor < 2^61`, `|Lh| < 2^31`, row norms $< 2^{60}$ and `|R| < 2^61/n` before any integer row sum, and returns the exact Gershgorin lower bound $\min_i (R_{ii}-\sum_{j\ne i}\lvert R_{ij}\rvert)/\text{factor}$ — a failure skips the candidate, nothing is clamped. `head_radius` guards its row sums, `tail_penalty` its columns/shifts, `hot_enclosure` its cumulative diagonal sums. | `independent.py:323-384` (`positive`), `:234-252`, `:191-232`, `:289-293` (cumulative-sum guard and superadditivity spot check) |
 
-Everything else on the hot side follows `COMMON-CUTOFF` (`FIX2.md`, `RIGOR.md` §5, `COMMON-CUTOFF-REVIEW/REVIEW4.md` PASS): window partition at the exact mask jumps `:410-419`, head size $m = \max(NB/2, 2k+1) = 200$ with $k \le 5$ for this package (`NB = 400`, `:55`; the sibling's $m = \max(160, 2k+1)$ is a floor, and taking the larger floor only adds margin), exact integer centre/radius across a window `:255-297`, PSD-dominated Schur completion of the infinite tail `:300-322`, exact integer acceptance `:323-384`, unbounded cover with a hard depth limit that **raises** instead of accepting `:385-392`.
+Everything else on the hot side follows `common-cutoff` (`FIX2.md`, `RIGOR.md` §5, `common-cutoff-review/REVIEW4.md` PASS): window partition at the exact mask jumps `:410-419`, head size $m = \max(NB/2, 2k+1) = 200$ with $k \le 5$ for this package (`NB = 400`, `:55`; the sibling's $m = \max(160, 2k+1)$ is a floor, and taking the larger floor only adds margin), exact integer centre/radius across a window `:255-297`, PSD-dominated Schur completion of the infinite tail `:300-322`, exact integer acceptance `:323-384`, unbounded cover with a hard depth limit that **raises** instead of accepting `:385-392`.
 
 Independence from `replay.py` is preserved: no import, and a different arithmetic path (cold side unfolded exact `Fraction` full line with Hutton's $\pi$ `:420-451`, `:452-462`; hot side folded-form integer enclosure plus exact Gram acceptance; `replay.py` uses the folded identity and a scalar tail bound).
 
@@ -86,8 +86,8 @@ Two notes for whoever next edits `RESULT.md` / `bounds.json` (not changes made h
 
 ## 6. Commands and exit codes
 
-All rows rerun after the final edit; working directory `D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/MUSTAR-HALF`, runner prefix
-`RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy python -B"`.
+All rows rerun after the final edit; working directory `records/mustar-half`, runner prefix
+`RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 uv run --no-project --with numpy --with scipy python -B"`.
 
 | command | exit | note |
 |---|---:|---|
@@ -144,12 +144,12 @@ Rerun after N1-N4 (final bytes, sha256 below):
 | `independent.v3-preN.py` (before N1-N4) | `7abdb918abf81a214630051338050f964830665600bce02e70c8a7cb9014adb1` |
 | `independent.v2-preR3.py` (R3 checkpoint) | `dc25482537ccd3e27cbbb543d363e134e1f5aa58ec090aa1235e2a2dbfc36538` |
 | `independent.v1-rejected.py` (review-era unsound device) | `3365b76b0887d9da47d35e1985ee25234e3e4de5c84ef50c8651ccffae8a44e0` |
-| `RESULT.md` (after N4) | `ddec869dca4088537a004f13083454af1a8337bcb7dd6a2ced06c9cae2b4188d` |
+| `RESULT.md` (after N4; shipped copy, working locations abbreviated) | `d30dc06c1d7449a134363e8c5afc6b8e19088ef181cf1a8dde9459f3fbcec062` |
 | `RESULT.v2.md` (backup of `RESULT.md` before N4) | `0c4fd77681008b2bc7a5d41c5522e8599124094b7245094ddfbe7758c3937a8c` |
 | `replay.py` | `d7f83656e0c6e47664519e4d1bb6acc6602473391dfc1c7d6b3642b08f58bbc4` |
 | `bounds.json` | `dfccb6776db72fc4c21443007a88a7b10f3fd7d0c281f14543f47f6959b8009c` |
 | `fixtures.json` | `bf1d6ca29dcf640ef99782d01ea34a9e5192b678e4b43610dc457acecad891ee` |
-| `RIGOR.md` | `cbf06f9c700be1af748c70ccb062bcf5a75789e9b744a54ba5b9f507a6a19989` |
+| `RIGOR.md` (shipped copy, working locations abbreviated) | `1f834afd3f0898f91daf1d6bd8a2eda556863efbfc677fcabc6c0252b65a29af` |
 | `structure.py` | `6d3b2dae169a936fadd7598ec90884ef781ee88bf93a3d17fdd365c002c31eae` |
 | `phase_scan.py` | `2c07a5837cab74b5eaf0ab86015e536b3ca04f29b553884d9177a87258a0ebaf` |
 

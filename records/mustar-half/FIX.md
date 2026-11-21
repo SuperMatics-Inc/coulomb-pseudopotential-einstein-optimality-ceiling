@@ -1,4 +1,4 @@
-# FIX — Proof, Document, and Structural-Check Repair for `MUSTAR-HALF` (`REVIEW.md` F3–F8)
+# FIX — Proof, Document, and Structural-Check Repair for `mustar-half` (`REVIEW.md` F3–F8)
 
 Status: **proof draft and document/structural repairs applied, awaiting re-review.**
 Per project rules, nothing in `RIGOR.md` or `RESULT.md` is self-labeled `PROVED` or `CERTIFIED`; theorems in `RIGOR.md` and `RESULT.md` are labeled **proof draft**.
@@ -41,9 +41,9 @@ For each two-line spectrum $p = p_1 \delta_{u_1} + p_2 \delta_{u_2}$ in `fixture
 
 ## 3. Verification Reruns and Recorded Exit Codes
 
-Runner prefix (from `CHECKS.txt`, working directory `D:/dev/scratch/ceiling-20261118/C-LAMBDA-MU/MUSTAR-HALF`):
+Runner prefix (from `CHECKS.txt`, working directory `records/mustar-half`):
 ```bash
-RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 UV_CACHE_DIR=D:/dev/.cache/uv uv run --no-project --with numpy --with scipy python -B"
+RUN="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 uv run --no-project --with numpy --with scipy python -B"
 ```
 
 | Command | Expected exit | Actual exit | Output summary |
