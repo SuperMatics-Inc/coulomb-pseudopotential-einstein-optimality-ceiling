@@ -30,7 +30,7 @@
 
 \title{The Coulomb pseudopotential and the optimality of the Einstein spectrum\\ for the linear Eliashberg ceiling}
 \author{Davis Rens\\SuperMatics Inc.\\\href{https://orcid.org/0000-0001-5839-5197}{ORCID 0000-0001-5839-5197}}
-\date{20 November 2026}
+\date{21 November 2026}
 \begin{document}
 \maketitle
 
@@ -51,9 +51,13 @@ brackets, including the zero-repulsion calibration
 $C(1)\in[0.11461945,0.11461957]$. A separate section goes below one half: four further
 counterexamples, certified by a second pair of independent exact verifiers in the same two
 roles, confined to $\muS/\lambda=0.4786$ to $0.4890$ at couplings $\lambda=25.6$ to $28$,
-so that $\muS/\lambda=1/2$ is not a threshold of the model, together with proved
-optimality in three regimes, a two-line reduction that makes every comparison
-two-dimensional, and floating-point data locating the failure. Statements carry the
+so that $\muS/\lambda=1/2$ is not a threshold of the model, together with a two-line
+reduction that makes every comparison two-dimensional, a realizability lemma that rules out
+fixed-$k=1$ crossings at $\muS/\lambda=1/2$ for $\lambda\ge10$, proved optimality in three
+analytic regimes, a certified small-repulsion optimality band $\muS/\lambda\le1/64$ across
+all cutoffs on $\lambda\in[3/10,3]$ with a sharp jump-cliff onset tie, a second-variation
+criterion for local strict maximality, and floating-point data locating the failure.
+Statements carry the
 labels
 \textsc{proved}, \textsc{certified}, \textsc{numerical} and \textsc{open}, which refer to
 mathematical or computational evidence and never to measurements. The bounds are on the
@@ -102,7 +106,10 @@ Section~\ref{sec:cert} with exact rational witnesses and two independent verifie
 gains of at least $2.59$, $29.09$ and $82.57$ percent in temperature. Below one half the
 failure persists but only in a narrow window of extreme coupling: Section~\ref{sec:half}
 certifies four further instances down to $\muS/\lambda=0.4786$, all of them at
-$\lambda=25.6$ to $28$, and proves that Einstein is optimal in three regimes.
+$\lambda=25.6$ to $28$, proves that Einstein is optimal in three analytic regimes, and
+certifies an explicit small-repulsion optimality band $\muS/\lambda\le1/64$ on
+$\lambda\in[3/10,3]$ across all cutoffs, checked by a third pair of independent exact
+verifiers.
 \end{enumerate}
 So the sharp value of the ceiling is not at stake; the identity of the maximizing spectrum
 is. A user of the ceiling who assumes that the single line is the worst case at fixed
@@ -122,6 +129,27 @@ Throughout, a statement labelled \textsc{proved} has a proof in the text;
 \textsc{certified} means that a finite exact-arithmetic certificate has been checked by
 two independently written verifiers; \textsc{numerical} means floating-point evidence
 only; \textsc{open} means not established in either direction.
+
+\emph{Changes in version 2.} This version extends Section~\ref{sec:half} of Version~1
+(\DOI{10.5281/zenodo.24409773}; replay supplement \DOI{10.5281/zenodo.24409779}) and
+corrects the single-mode mask attribution in its numerical phase table. It is not a
+retraction: no \textsc{proved} theorem and no \textsc{certified} counterexample or bracket
+table of Version~1 changes. Section~\ref{sec:half:proof} adds a realizability lemma for
+fixed-$k$ crossings under a common cutoff (Lemma~\ref{lem:realizable}, \textsc{proved})
+and certifies that at $\muS/\lambda=1/2$ the single-mode crossing $k=1$ is unrealizable
+under any common cutoff for $\lambda\ge10$ because the $k=0$ crossing occurs at a strictly
+lower temperature than $9\,q_E^{(1)}$ (Corollary~\ref{cor:unrealizable},
+\textsc{certified}). Accordingly, item~(3) of Section~\ref{sec:half:num} and
+Table~\ref{tab:phase} now distinguish fixed-$k=1$ matrix crossings from common-cutoff
+realizable crossings and record the lowest realizable mask count ($k=2$ at $\lambda=10$
+and $k=5$ at $\lambda\in\{20,35,50\}$). Section~\ref{sec:half:proof} also adds a two-line
+difference decomposition (Lemma~\ref{lem:gb}, \textsc{proved}), certifies an explicit
+small-repulsion band $\muS/\lambda\le1/64$ on $\lambda\in[3/10,3]$ across all $R>0$
+together with a sharp jump-cliff onset tie at $4R^2=(2k+1)^2q_{\rm lin}(\delta_1)$
+(Theorem~\ref{thm:smallr}, \textsc{certified}), and establishes a second-variation
+criterion for local strict maximality near the Einstein line
+(Theorem~\ref{thm:d2}, \textsc{proved}) together with its certified operator-positivity
+regimes (Corollary~\ref{cor:d2cert}, \textsc{certified}).
 
 \section{Model and the common cutoff}\label{sec:model}
 
@@ -645,13 +673,17 @@ $\muS/\lambda\in\{2/3,3/4,1\}$. The natural next question is where the failure o
 optimality begins, and whether $\muS/\lambda=1/2$ is a threshold. It is not, but below one
 half the failure requires a coupling that is itself numerically located. This section
 proceeds in three steps. Section~\ref{sec:half:cert} certifies four counterexamples
-strictly below one half. Section~\ref{sec:half:proof} proves the analytic statements that
-bound the failure: a two-line reduction at fixed mask, exact optimality whenever the mask
-is empty at the crossing, the resulting large-coupling regime, the single-mode regime with
-its sharp hypothesis, and a parameter-free positivity bound above $q=4\lambda$ that closes
-the hot side of every certificate here without computation. Section~\ref{sec:half:num}
-records where the certified failure stops; that part is \textsc{numerical} and carries no
-certificate and no proof.
+strictly below one half. Section~\ref{sec:half:proof} proves and certifies the analytic
+and computer-assisted statements that bound the failure: a two-line reduction at fixed
+mask, exact optimality whenever the mask is empty at the crossing, the resulting
+large-coupling regime, the single-mode regime with its sharp hypothesis, a parameter-free
+positivity bound above $q=4\lambda$ that closes the hot side of every certificate here
+without computation, a realizability lemma for fixed-$k$ crossings with a certified exclusion
+of $k=1$ at $\muS/\lambda=1/2$ for $\lambda\ge10$, a two-line difference decomposition and
+a certified small-repulsion optimality band $\muS/\lambda\le1/64$ on $\lambda\in[3/10,3]$
+with a sharp jump-cliff onset tie, and a second-variation criterion for local strict
+maximality. Section~\ref{sec:half:num} records where the certified failure stops; that
+part is \textsc{numerical} and carries no certificate and no proof.
 
 Throughout this section $p\in\mathcal P_1=\{$probability measures on $(0,\infty)$ with
 $\int dp=\int u\,dp=1\}$, $\Fcal_p^{(k)}(q)$ is the form \eqref{eq:form} built from the
@@ -808,14 +840,16 @@ optimality claim.}
 
 \subsection{Analytic results below one half}\label{sec:half:proof}
 
-The four certificates stand on their own, and the five results below explain why they are
+The four certificates stand on their own, and the results below explain why they are
 possible and where they cannot be. The first reduces every comparison at fixed mask to a
 two-line spectrum, so the scan of Section~\ref{sec:half:num} is not a restriction. The
-last four delimit regimes in which the repulsion provably cannot disturb the Einstein
-optimum. Only Theorem~\ref{thm:nomask} uses a result from outside this paper, the
-zero-repulsion strict optimality of the Einstein line~\cite{rens,kondratev}, and that
-dependency is written into its hypothesis; Theorem~\ref{thm:large} applies it and inherits
-the dependency.
+next four delimit analytic regimes in which the repulsion provably cannot disturb the
+Einstein optimum, and the remaining five establish common-cutoff realizability, an
+explicit small-repulsion optimality band across all cutoffs on $\lambda\in[3/10,3]$, and a
+second-variation criterion for local strict maximality. Only Theorem~\ref{thm:nomask} uses
+a result from outside this paper, the zero-repulsion strict optimality of the Einstein
+line~\cite{rens,kondratev}, and that dependency is written into its hypothesis;
+Theorem~\ref{thm:large} applies it and inherits the dependency.
 
 \begin{lemma}[Exact finite-support decomposition]\label{lem:decomp}\proved
 For every finitely supported $h\in\ell^2(\mathbb Z_{\ge0})$ and every $p\in\mathcal P_1$
@@ -1029,13 +1063,374 @@ arithmetic by the structural checker.
 
 Theorem~\ref{thm:asym} is why the certificates of this section and of
 Section~\ref{sec:cert} need a hot cover only on a bounded interval, and it holds for every
-spectrum, every mask and every $\muS$ without computation. The analytic regimes do not
-meet: Theorem~\ref{thm:large} covers couplings above $4R^2+1$,
-Theorem~\ref{thm:cone} covers $\muS\le1$ or $\lambda\le2$ with $\muS/\lambda\le1/2$, and
-Theorem~\ref{thm:nomask} covers cutoffs below the crossing. The window of the certified
-counterexamples lies outside all three, and it also lies outside every physically
-realistic coupling.
+spectrum, every mask and every $\muS$ without computation.
 
+A fixed-$k$ scan treats $k$ as an independent parameter, whereas a common cutoff $R$ sets
+$k(q,R)=|\{i\ge0:(2i+1)^2q<4R^2\}|$ as a step function of $q$. The next lemma characterizes
+when a fixed-$k$ crossing can be the true common-cutoff onset. For each integer $k\ge0$,
+let $q_E^{(k)}(\lambda,\muS)=\sup\{q>0:\lambda_{\min}(\Fcal_{\delta_1}^{(k)}(q))<0\}$, so
+that $q_E^{(0)}(\lambda,\muS)=q_{\rm ph}(\lambda)$ is independent of $\muS$.
+
+\begin{lemma}[Realizability of a fixed-$k$ crossing under a common cutoff]
+\label{lem:realizable}\proved
+Fix $\lambda>0$, $\muS\ge0$ and an integer $k\ge1$, and write
+$q_E^{(k)}=q_E^{(k)}(\lambda,\muS)$ and $q_p^{(k)}(\lambda,\muS)=\sup\{q>0:\lambda_{\min}(\Fcal_p^{(k)}(q))<0\}$.
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item \emph{Pointwise mask-count window and one-sided continuity.} Under \eqref{eq:mask},
+$k(q,R)=|\{i\ge0:(2i+1)^2q<4R^2\}|$ is right-continuous in $q$ and left-continuous in $R^2$.
+For any $q>0$ and $R>0$, one has $k(q,R)=0$ if and only if $q\in I_0(R):=[4R^2,\infty)$,
+and for $m\ge1$ one has $k(q,R)=m$ if and only if
+\begin{equation}\label{eq:mwindow}
+(2m-1)^2q<4R^2\le(2m+1)^2q\qquad\Longleftrightarrow\qquad
+q\in I_m(R):=\left[\frac{4R^2}{(2m+1)^2},\frac{4R^2}{(2m-1)^2}\right).
+\end{equation}
+\item \emph{Necessary realizability conditions.} A failure of Einstein optimality at a
+fixed-$k$ crossing $q=q_E^{(k)}$ (meaning $k(q,R)=k$,
+$q_{\rm lin}(\delta_1;\lambda,\muS,R)=q$, and $q_{\rm lin}(p;\lambda,\muS,R)>q$ for some
+$p\in\mathcal P_1\setminus\{\delta_1\}$) is attained by a common cutoff $R>0$ only if all
+three of the following conditions hold:
+\begin{enumerate}[label=(\alph*),leftmargin=1.8em]
+\item \emph{Mask-window containment:}
+\begin{equation}\label{eq:realizable}
+(2k-1)^2q_E^{(k)}<4R^2\le(2k+1)^2q_E^{(k)}
+\qquad\left(\text{i.e.\ }q_E^{(k)}\in I_k(R)\right),
+\end{equation}
+with strict upper inequality $(2k-1)^2q_E^{(k)}<4R^2<(2k+1)^2q_E^{(k)}$ required whenever
+$k(q',R)=k$ on an open left-neighbourhood $(q_E^{(k)}-\delta,q_E^{(k)})$;
+\item \emph{Non-preemption of Einstein at lower masks:}
+$\lambda_{\min}(\Fcal_{\delta_1}^{(k(q',R))}(q'))\ge0$ for every $q'>q_E^{(k)}$, so that
+for every integer $m\in\{0,\dots,k-1\}$ one has $\Fcal_{\delta_1}^{(m)}(q')\succeq0$
+throughout $I_m(R)\cap(q_E^{(k)},\infty)$ and in particular
+$q_E^{(m)}(\lambda,\muS)\le4R^2/(2m+1)^2$ ($4R^2\ge q_{\rm ph}(\lambda)$ for $m=0$);
+\item \emph{Non-preemption of the competitor at lower masks:} whenever
+$q_{\rm lin}(p;\lambda,\muS,R)>q_E^{(k)}$ is witnessed on the $k$-mask branch itself,
+$q_p^{(k)}(\lambda,\muS)<4R^2/(2k-1)^2$ (otherwise the comparison switches to $k'<k$).
+\end{enumerate}
+\item \emph{Zero-mask dominance threshold and preemption dichotomy.} Whenever a common
+cutoff $R>0$ realizes a fixed-$k$ crossing at $q=q_E^{(k)}(\lambda,\muS)$ ($k\ge1$),
+combining $4R^2\ge q_{\rm ph}(\lambda)$ from (ii)(b) with \eqref{eq:realizable} yields
+\begin{equation}\label{eq:qekbound}
+q_E^{(k)}(\lambda,\muS)\ge\frac{4R^2}{(2k+1)^2}\ge\frac{q_{\rm ph}(\lambda)}{(2k+1)^2}.
+\end{equation}
+Whenever $(2k+1)^2q_E^{(k)}(\lambda,\muS)<q_{\rm ph}(\lambda)$, no common cutoff $R>0$ can
+realize the fixed-$k$ crossing $q_E^{(k)}$: for every $R>0$, either $4R^2<q_{\rm ph}(\lambda)$
+(so $I_0(R)=[4R^2,\infty)$ contains $(4R^2,q_{\rm ph}(\lambda))$ where $k(q',R)=0$ and
+$\lambda_{\min}(\Fcal_{\delta_1}^{(0)}(q'))<0$, placing the onset at
+$q_{\rm lin}(\delta_1)=q_{\rm ph}(\lambda)>q_E^{(k)}$ with $k=0$ and strict Einstein
+dominance by Theorem~\ref{thm:nomask}), or
+$4R^2\ge q_{\rm ph}(\lambda)>(2k+1)^2q_E^{(k)}(\lambda,\muS)$ (so
+$k(q_E^{(k)},R)\ge k+1$ and the $k$-mask branch is not active at $q_E^{(k)}$).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:mask}, $k(q,R)=|\{i\ge0:(2i+1)^2q<4R^2\}|$. Since $(2i+1)^2q$ is strictly
+increasing in $i\ge0$, one has $k(q,R)=0$ if and only if $i=0$ fails $q<4R^2$, i.e.\
+$q\in[4R^2,\infty)$, and for $m\ge1$ one has $k(q,R)=m$ if and only if $i=m-1$ satisfies
+$(2m-1)^2q<4R^2$ and $i=m$ fails $(2m+1)^2q<4R^2$, which is \eqref{eq:mwindow}. Because
+each window $I_m(R)$ is closed on the left and open on the right in $q$ (and open on the
+left and closed on the right in $R^2$), $k(q,R)$ is right-continuous in $q$ and
+left-continuous in $R^2$, proving (i). For (ii)(a), $k(q_E^{(k)},R)=k$ is equivalent to
+\eqref{eq:realizable}, while at the upper endpoint $4R^2=(2k+1)^2q_E^{(k)}$ one has
+$q_E^{(k)}=\inf I_k(R)$ so $k(q',R)=k+1$ on $(q_E^{(k)}-\delta,q_E^{(k)})$. For (ii)(b), if
+$\lambda_{\min}(\Fcal_{\delta_1}^{(k(q',R))}(q'))<0$ for some $q'>q_E^{(k)}$, then
+$q_{\rm lin}(\delta_1;\lambda,\muS,R)\ge q'>q_E^{(k)}$, contradicting
+$q_{\rm lin}(\delta_1)=q_E^{(k)}$; since $q'>q_E^{(k)}$ and $4R^2\le(2k+1)^2q_E^{(k)}$ imply
+$k(q',R)\in\{0,\dots,k\}$, this requires $\Fcal_{\delta_1}^{(m)}(q')\succeq0$ on
+$I_m(R)\cap(q_E^{(k)},\infty)$ for $0\le m\le k-1$, and for $m=0$ the fact that
+$\lambda_{\min}(\Fcal_{\delta_1}^{(0)}(q'))<0$ on $(0,q_{\rm ph}(\lambda))$ forces
+$4R^2\ge q_{\rm ph}(\lambda)$. Condition (ii)(c) holds because $k(q',R)\le k-1$ for all
+$q'\ge4R^2/(2k-1)^2$. Part (iii) follows by combining $4R^2\ge q_{\rm ph}(\lambda)$ with
+\eqref{eq:realizable}.
+\end{proof}
+
+\begin{corollary}[Unrealizability of fixed-$k=1$ crossings at $\muS/\lambda=1/2$ for $\lambda\ge10$]
+\label{cor:unrealizable}\certified
+For every $\lambda\in\{10,20,25,35,50,65,152\}$ at $\muS=\lambda/2$, the fixed-$k=1$
+Einstein crossing satisfies the strict rational separation
+\begin{equation}\label{eq:9q1}
+9\,q_E^{(1)}(\lambda,\lambda/2)<9\,q_1^{\rm hot}(\lambda)<q_0^{\rm cold}(\lambda)
+<q_{\rm ph}(\lambda)
+\end{equation}
+with the certified brackets of Table~\ref{tab:realizable}. By Lemma~\ref{lem:realizable}(iii),
+none of these fixed-$k=1$ crossings is realizable by any common cutoff $R>0$. In
+particular, at $\lambda=152$, $\muS=76$ and the two-line spectrum
+$p_2=(1-\theta)\delta_{u_1}+\theta\delta_{u_2}$ with $u_1=10^{-5}$, $u_2=35/2$ and
+$\theta=(1-u_1)/(u_2-u_1)=99999/1749999=33333/583333$, at $q_{\rm test}=8671/2000=4.3355$
+one has both $\Fcal_{\delta_1}^{(1)}(q_{\rm test})\succ0$ (on $[q_{\rm test},4\lambda]$) and
+$\lambda_{\min}(\Fcal_{p_2}^{(1)}(q_{\rm test}))<0$, whereas
+$9\,q_{\rm test}=39.0195<199.4520<q_{\rm ph}(152)$: the fixed-$k=1$ failure is genuine for
+the fixed-$1$ matrix $\Fcal_p^{(1)}$, yet unrealizable under any common cutoff $R$.
+\end{corollary}
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}rrrrrr@{}}
+\toprule
+$\lambda$ & $\muS$ & $q_1^{\rm hot}(\lambda)$ & $9\,q_1^{\rm hot}(\lambda)$ &
+$q_0^{\rm cold}(\lambda)$ & $q_0^{\rm cold}/(9\,q_1^{\rm hot})$\\
+\midrule
+$10$ & $5$ & $13581/10000=1.3581$ & $12.2229$ & $61409/5000=12.2818$ & $1.0048$\\
+$20$ & $10$ & $9447/5000=1.8894$ & $17.0046$ & $254601/10000=25.4601$ & $1.4972$\\
+$25$ & $25/2$ & $1297/625=2.0752$ & $18.6768$ & $160251/5000=32.0502$ & $1.7160$\\
+$35$ & $35/2$ & $2977/1250=2.3816$ & $21.4344$ & $452309/10000=45.2309$ & $2.1102$\\
+$50$ & $25$ & $13747/5000=2.7494$ & $24.7446$ & $81253/1250=65.0024$ & $2.6269$\\
+$65$ & $65/2$ & $15279/5000=3.0558$ & $27.5022$ & $847743/10000=84.7743$ & $3.0825$\\
+$152$ & $76$ & $43579/10000=4.3579$ & $39.2211$ & $49863/250=199.4520$ & $5.0853$\\
+\bottomrule
+\end{tabular}
+\caption{Certified upper bounds $q_E^{(1)}(\lambda,\lambda/2)<q_1^{\rm hot}(\lambda)$ and
+lower bounds $q_{\rm ph}(\lambda)>q_0^{\rm cold}(\lambda)$ at $\muS/\lambda=1/2$
+(\textsc{certified}). Every row satisfies $9\,q_1^{\rm hot}(\lambda)<q_0^{\rm cold}(\lambda)$,
+violating the necessary condition \eqref{eq:qekbound} of Lemma~\ref{lem:realizable}(iii) at
+$k=1$.}
+\label{tab:realizable}
+\end{table}
+
+To establish an explicit small-repulsion optimality band across all cutoffs $R>0$ and all
+active masks $k\ge0$, we factor out the exact two-line amplitude of every non-Einstein
+two-line measure.
+
+\begin{lemma}[Exact two-line difference kernel $G_B^{(0)}$ and decomposition]
+\label{lem:gb}\proved
+Let $p_2=(1-\theta)\delta_{u_1}+\theta\delta_{u_2}\in\mathcal P_1\setminus\{\delta_1\}$
+with $0<u_1<1<u_2<\infty$ and $(1-\theta)u_1+\theta u_2=1$, and set
+\[
+t_1:=u_1\in(0,1),\qquad t_2:=\frac{1}{u_2}\in(0,1),\qquad
+\eta:=(1-t_1)(1-t_2)\in(0,1).
+\]
+Then for every $q>0$ and every $j\ge1$, writing $x=qj^2$:
+\begin{equation}\label{eq:ajdiff}
+a_j(q;\delta_1)-a_j(q;p_2)=\lambda\,\eta\,B_j(q;t_1,t_2),\qquad
+B_j(q;t_1,t_2):=\frac{x}{(1+x)(t_1+x)(1+t_2x)}>0.
+\end{equation}
+Consequently, for every $\lambda>0$, $\muS\ge0$, $q>0$ and $k\in\mathbb Z_{\ge0}$,
+\begin{equation}\label{eq:gbform}
+\Fcal_{p_2}^{(k)}(q)=(1-\eta)\,\Fcal_{\delta_1}^{(k)}(q)
++\eta\,\Big(G_B^{(0)}(\lambda;q,t_1,t_2)+2\muS\chi_k\chi_k^T\Big),
+\end{equation}
+where $\chi_k=\sum_{i=0}^{k-1}e_i$ ($0$ if $k=0$), and $G_B^{(0)}(\lambda;q,t_1,t_2)$ is
+the mask-free ($k=0$, $\muS=0$) folded operator with bare diagonal $2i+1$ and transfer
+weights
+\begin{equation}\label{eq:bgb}
+b_{{\rm GB},j}(q;t_1,t_2):=\lambda\left(\frac{1}{1+x}
+-\frac{x}{(1+x)(t_1+x)(1+t_2x)}\right).
+\end{equation}
+Furthermore, for all $x>0$ and $(t_1,t_2)\in[0,1]^2$:
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item $0<b_{{\rm GB},j}(q;t_1,t_2)\le\lambda/(1+x)<\lambda/(qj^2)$ (since
+$(t_1+x)(1+t_2x)>x$ for $t_1,t_2\ge0$ and $x>0$), so Theorem~\ref{thm:asym} applies
+verbatim to $G_B^{(0)}$ for $q\ge4\lambda$.
+\item $B_j(q;t_1,t_2)$ is strictly decreasing in $t_1\in[0,1]$ and in $t_2\in[0,1]$, so
+$b_{{\rm GB},j}(q;t_1,t_2)$ is strictly increasing in both $t_1$ and $t_2$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Since $(1-\theta)u_1+\theta u_2=1$, we have $(1-\theta)u_1(u_2+x)+\theta u_2(u_1+x)=u_1u_2+x$.
+Therefore
+\[
+\frac{1}{1+x}-\frac{(1-\theta)u_1}{u_1+x}-\frac{\theta u_2}{u_2+x}
+=\frac{(u_1+x)(u_2+x)-(1+x)(u_1u_2+x)}{(1+x)(u_1+x)(u_2+x)}
+=\frac{(1-u_1)(u_2-1)x}{(1+x)(u_1+x)(u_2+x)}.
+\]
+Substituting $u_1=t_1$ and $u_2=1/t_2$ (dividing numerator and denominator by $u_2$) yields
+$\eta\,B_j(q;t_1,t_2)$ and \eqref{eq:ajdiff}. Because $\Fcal_p^{(k)}(q)$ is affine in the
+transfer weights $a_j$, writing
+$\Fcal_{p_2}^{(k)}(q)=(1-\eta)\Fcal_{\delta_1}^{(k)}(q)+\eta(\Fcal_{\delta_1}^{(k)}(q)-\lambda\mathcal T(B))$
+gives \eqref{eq:gbform}. For $x>0$ and $t_1,t_2\ge0$, $(t_1+x)(1+t_2x)=x+t_1+t_2x^2+t_1t_2x>x$,
+giving $0<B_j<1/(1+x)$ and hence (i); (ii) is immediate since $(t_1+x)(1+t_2x)$ is strictly
+increasing in $t_1$ and $t_2$.
+\end{proof}
+
+\begin{theorem}[Small-repulsion optimality on {$\lambda\in[3/10,3]$} at $\muS/\lambda\le1/64$
+and the jump-cliff onset tie]\label{thm:smallr}\certified
+Set $r_0:=1/64=0.015625$. For every $\lambda\in[3/10,3]$, every $\muS\in[0,r_0\lambda]$,
+every common cutoff $R\ge0$ and every $p\in\mathcal P_1\setminus\{\delta_1\}$:
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item \emph{Global optimality and strict domination on non-cliff instances.}
+\begin{equation}\label{eq:smallrdom}
+q_{\rm lin}(\lambda,\muS,R;p)\le q_{\rm lin}(\lambda,\muS,R;\delta_1),
+\end{equation}
+with strict inequality $q_{\rm lin}(\lambda,\muS,R;p)<q_{\rm lin}(\lambda,\muS,R;\delta_1)$
+whenever $q_{\rm lin}(\lambda,\muS,R;\delta_1)$ is not a jump cliff, i.e.\
+$4R^2\ne(2m+1)^2q_{\rm lin}(\lambda,\muS,R;\delta_1)$ for all $m\in\mathbb Z_{\ge0}$.
+\item \emph{Pointwise strict form dominance at and above the Einstein onset.}
+For every $q\ge q_{\rm lin}(\lambda,\muS,R;\delta_1)$,
+$\Fcal_p^{(k(q,R))}(q)\succ0$ for all $p\in\mathcal P_1\setminus\{\delta_1\}$.
+\item \emph{Exact sharpness of the non-cliff side condition.} At $\lambda=2$,
+$\muS=1/32=r_0\lambda$, $q_{\rm cliff}=962/625=1.5392$ and
+$R^2=(29^2/4)q_{\rm cliff}=404521/1250$ ($4R^2=841\,q_{\rm cliff}$, the jump boundary
+between $k=15$ and $k=14$), the symmetric two-line spectrum
+$p_\varepsilon=\frac12\delta_{1-\varepsilon}+\frac12\delta_{1+\varepsilon}$ with
+$\varepsilon=1/1024$ satisfies the exact onset tie
+\begin{equation}\label{eq:clifftie}
+q_{\rm lin}(2,\tfrac{1}{32},R;p_\varepsilon)
+=q_{\rm lin}(2,\tfrac{1}{32},R;\delta_1)=\frac{962}{625},
+\end{equation}
+even though $\Fcal_{p_\varepsilon}^{(k(q,R))}(q)\succ0$ for all $q\ge962/625$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The interval $[3/10,3]$ is partitioned into $33$ exact rational slabs
+$[\lambda_a^{(s)},\lambda_b^{(s)}]$, each equipped with a rational pivot $q_*^{(s)}>0$.
+(1) For each slab $s$, an explicit nonnegative integer vector $v^{(s)}\in\mathbb Z_{\ge0}^n$
+satisfies $\langle v^{(s)},(\Fcal_{\delta_1}^{(0)}(\lambda_a^{(s)};q_*^{(s)})+2r_0\lambda_a^{(s)}\mathbf 1\mathbf 1^T)v^{(s)}\rangle<0$.
+Because $v^{(s)}\ge0$ and $\langle v^{(s)},Dv^{(s)}\rangle>0$, the $\lambda$-coefficient is
+strictly negative and $(\sum_{i<k}v_i^{(s)})^2\le(\sum_{i<n}v_i^{(s)})^2$ for every $k\ge0$,
+forcing $q_{\rm lin}(\lambda,\muS,R;\delta_1)>q_*^{(s)}$ across the slab for all
+$\muS\in[0,r_0\lambda]$ and $R\ge0$. (2) Because $G_B^{(0)}(\lambda;q,t_1,t_2)=D+\lambda\mathcal T(b_{\rm GB}/\lambda)$
+with $D\succ0$, positivity at $\lambda_b^{(s)}$ implies positivity for all
+$\lambda\in(0,\lambda_b^{(s)}]$. On $[q_*^{(s)},4\lambda_b^{(s)}]\times[0,1]^2$, $2{,}361$
+exact rational Schur-complement Cholesky boxes across the $33$ slabs certify
+$G_B^{(0)}(\lambda_b^{(s)};q,t_1,t_2)\succeq\gamma^{(s)}I\succ0$, while on
+$[4\lambda_b^{(s)},\infty)\times[0,1]^2$ Lemma~\ref{lem:gb}(i) and Theorem~\ref{thm:asym}
+give $G_B^{(0)}(\lambda_b^{(s)};q,t_1,t_2)\succeq(1-\pi^2/12)I\succ\frac16I$. (3) Any
+$p\in\mathcal P_1\setminus\{\delta_1\}$ disintegrates as a positive barycentric integral of
+two-line measures over $(u_1,u_2)\in(0,1)\times(1,\infty)$ with positive total weight
+$\bar\eta(p)>0$; integrating \eqref{eq:gbform} gives
+$\Fcal_p^{(k(q,R))}(q)\succeq\bar\eta(p)\min(\gamma^{(s)},1/6)I\succ0$ for all
+$q\ge q_{\rm lin}(\delta_1)>q_*^{(s)}$, proving (ii). When $q_E=q_{\rm lin}(\delta_1)$ is
+not a jump cliff, $k(q,R)$ is constant on $(q_E-\delta,q_E+\delta)$ and norm continuity of
+$\Fcal_p^{(k)}(q)$ gives $q_{\rm lin}(p)<q_E$, proving (i). For (iii), at $\lambda=2$,
+$\muS=1/32$, $q_{\rm cliff}=962/625$ and $4R^2=29^2q_{\rm cliff}$, exact rational
+certificates verify $\Fcal_{\delta_1}^{(k(q,R))}(q)\succ0$ and
+$\Fcal_{p_\varepsilon}^{(k(q,R))}(q)\succ0$ across all $9$ active windows
+$k=14,13,\dots,6$ on $[q_{\rm cliff},8]$ (with Theorem~\ref{thm:asym} covering $q\ge8$),
+while at $q=q_{\rm cliff}$ on the higher mask $k=15$ (active on $[4R^2/31^2,q_{\rm cliff})$)
+exact cold vectors $v_E,v_p$ certify $\langle v_E,\Fcal_{\delta_1}^{(15)}(q_{\rm cliff})v_E\rangle<0$
+and $\langle v_p,\Fcal_{p_\varepsilon}^{(15)}(q_{\rm cliff})v_p\rangle<0$; by left-continuity
+both forms are indefinite on $(q_{\rm cliff}-\delta,q_{\rm cliff})$, yielding \eqref{eq:clifftie}.
+\end{proof}
+
+\begin{theorem}[Second-variation operator $D_2$ and local strict maximality]
+\label{thm:d2}\proved
+Fix $\lambda>0$, $\muS\ge0$ and $R\ge0$, and let $q_E:=q_{\rm lin}(\lambda,\muS,R;\delta_1)$
+with active mask $k=k(q_E,R)$. Define the second-variation and $q$-derivative operators on
+$\ell^2(\mathbb Z_{\ge0})$ by
+\[
+D_2(\lambda,q):=-\mathcal T\left(\Big(\frac{\lambda qj^2}{(1+qj^2)^3}\Big)_{j\ge1}\right),\qquad
+D_1(\lambda,q):=q\,\partial_q\Fcal_{\delta_1}^{(k)}(\lambda;q)
+=-\mathcal T\left(\Big(\frac{\lambda qj^2}{(1+qj^2)^2}\Big)_{j\ge1}\right).
+\]
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item \emph{Exact second-variation formula.} For any $p\in\mathcal P_1$ with
+$\sigma^2(p):=\int_0^\infty(u-1)^2dp(u)<\infty$ and $\int_0^\infty u^{-1}|u-1|^3dp(u)<\infty$,
+and any $q>0$ and $k\ge0$,
+\begin{equation}\label{eq:d2exact}
+\Fcal_p^{(k)}(q)=\Fcal_{\delta_1}^{(k)}(q)+\sigma^2(p)\,D_2(\lambda,q)+\mathcal R_3(p;\lambda,q),
+\end{equation}
+where $\mathcal R_3(p;\lambda,q)=-\mathcal T\big((\lambda\int_0^\infty qj^2(u-1)^3(1+qj^2)^{-3}(u+qj^2)^{-1}dp(u))_{j\ge1}\big)$.
+In particular, for any family $p_\varepsilon\in\mathcal P_1$ with
+$\int(u-1)^2dp_\varepsilon(u)=\varepsilon^2\sigma^2+o(\varepsilon^2)$ ($\sigma>0$) and
+$\int u^{-1}|u-1|^3dp_\varepsilon(u)=o(\varepsilon^2)$ as $\varepsilon\to0$, one has
+$\Fcal_{p_\varepsilon}^{(k)}(q)=\Fcal_{\delta_1}^{(k)}(q)+\varepsilon^2\sigma^2D_2(\lambda,q)+o(\varepsilon^2)$
+in operator norm on $\ell^2(\mathbb Z_{\ge0})$.
+\item \emph{Sufficient criterion for local strict maximality.} Assume that:
+(1)~$q_E$ is not a jump cliff ($4R^2\ne(2m+1)^2q_E$ for all $m\ge0$, so $k(q,R)\equiv k$ near
+$q_E$); (2)~the upper branch is globally non-degenerate above $q_E$, i.e.\
+$\inf_{q\ge q_E+\eta}\lambda_{\min}(\Fcal_{\delta_1}^{(k(q,R))}(q))>0$ for every $\eta>0$;
+and (3)~both operator positivity conditions hold at $q_E$:
+\begin{equation}\label{eq:d2pos}
+\Fcal_{\delta_1}^{(k)}(q_E)+D_2(\lambda,q_E)\succ0
+\qquad\text{and}\qquad
+\Fcal_{\delta_1}^{(k)}(q_E)+D_1(\lambda,q_E)\succ0.
+\end{equation}
+Then there exists $\delta_0>0$ such that for every $p\in\mathcal P_1\setminus\{\delta_1\}$
+with $\operatorname{supp}(p)\subset[1-\delta_0,1+\delta_0]$ one has
+$q_{\rm lin}(\lambda,\muS,R;p)<q_{\rm lin}(\lambda,\muS,R;\delta_1)=q_E$. (Without
+hypothesis~(2), conditions~(1) and~(3) still guarantee
+$\langle h_E,D_2(\lambda,q_E)h_E\rangle>0$ and $\langle h_E,D_1(\lambda,q_E)h_E\rangle>0$
+for every $0\ne h_E\in\ker\Fcal_{\delta_1}^{(k)}(q_E)$, together with strict positivity
+$\Fcal_p^{(k)}(q)\succ0$ on a two-sided neighbourhood $(q_E-\eta_2,q_E+\eta_1]$ for all
+$p\in\mathcal P_1\setminus\{\delta_1\}$ supported in $[1-\delta_0,1+\delta_0]$.) If in
+addition $\ker\Fcal_{\delta_1}^{(k)}(q_E)=\operatorname{span}\{h_E\}$ is simple
+($\|h_E\|_2=1$), the onset shift of a family $p_\varepsilon$ supported in
+$[1-\delta(\varepsilon),1+\delta(\varepsilon)]$ ($\delta(\varepsilon)\to0$) satisfies
+\begin{equation}\label{eq:d2shift}
+q_{\rm lin}(\lambda,\muS,R;p_\varepsilon)=q_E-\varepsilon^2\sigma^2\,q_E
+\frac{\langle h_E,D_2(\lambda,q_E)h_E\rangle}{\langle h_E,D_1(\lambda,q_E)h_E\rangle}
++o(\varepsilon^2)<q_E.
+\end{equation}
+\item \emph{Analytic cone regimes.} On the zero-mask branch ($k=0$) and on the single-mode
+cone regime ($k=1$ with $\muS\le1+a_1(q_E;\delta_1)$), the ground state $h_E$ is simple,
+strictly positive and nonincreasing, so $L_j(h_E)<0$ for all $j\ge1$ and hence
+$\langle h_E,D_2(\lambda,q_E)h_E\rangle>0$ and $\langle h_E,D_1(\lambda,q_E)h_E\rangle>0$
+hold unconditionally.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For $u>0$ and $x=qj^2>0$, using $\int(u-1)dp(u)=0$ and the identity
+$(1+x)^{-1}-u(u+x)^{-1}+x(u-1)(1+x)^{-2}=x(u-1)^2(1+x)^{-2}(u+x)^{-1}
+=x(u-1)^2(1+x)^{-3}-x(u-1)^3(1+x)^{-3}(u+x)^{-1}$, integrating against $\lambda\,dp(u)$
+gives $a_j(q;\delta_1)-a_j(q;p)=\sigma^2(p)\lambda x(1+x)^{-3}-r_{3,j}(p;\lambda,q)$, which
+sums in $\ell^1$ to give \eqref{eq:d2exact}. When $\operatorname{supp}(p)\subset[1-\delta,1+\delta]$
+($\delta\le1/2$), $|r_{3,j}|\le2\lambda qj^2\delta\sigma^2(p)(1+qj^2)^{-3}$, so
+$\|\mathcal R_3(p;\lambda,q)\|\le C(\lambda,q)\delta\sigma^2(p)$. For (ii), let
+$K:=\ker\Fcal_{\delta_1}^{(k)}(q_E)$, which is finite-dimensional because
+$D^{-1/2}(\Fcal_{\delta_1}^{(k)}(q_E)-D)D^{-1/2}$ is compact and $D\succeq I$, so
+$\Fcal_{\delta_1}^{(k)}(q_E)\succeq\gamma P_{K^\perp}$ for some $\gamma>0$. By
+\eqref{eq:d2pos}, $\langle h_0,D_2(\lambda,q_E)h_0\rangle\ge c_2\|h_0\|_2^2$ and
+$\langle h_0,D_1(\lambda,q_E)h_0\rangle\ge c_1\|h_0\|_2^2$ on $K$ with $c_1,c_2>0$.
+Decomposing $h=h_0+h_\perp\in K\oplus K^\perp$, the Schur-complement bound with
+$\Fcal_{\delta_1}^{(k)}(q)=\Fcal_{\delta_1}^{(k)}(q_E)+((q-q_E)/q_E)D_1(\lambda,q_E)+O((q-q_E)^2)$
+gives $\Fcal_p^{(k)}(q)\succ0$ across $[q_E,q_E+\eta_1]$ and by norm continuity on
+$(q_E-\eta_2,q_E+\eta_1]$ for $\delta<\delta_0$. Under hypothesis~(2) on $[q_E+\eta_1,4\lambda]$
+and Theorem~\ref{thm:asym} on $[4\lambda,\infty)$, $\Fcal_p^{(k(q,R))}(q)\succ0$ holds for
+all $q>q_E-\eta_2$, so $q_{\rm lin}(p)\le q_E-\eta_2<q_E$; when $\dim K=1$, the implicit
+function theorem at fixed $k$ yields \eqref{eq:d2shift}. Part (iii) follows from
+Theorem~\ref{thm:cone}, which gives $h_{E,0}\ge h_{E,1}\ge\dots>0$ and $L_j(h_E)<0$ for all
+$j\ge1$.
+\end{proof}
+
+\begin{corollary}[Certified positivity of $\Fcal_{\delta_1}^{(k)}+D_2$ and $\Fcal_{\delta_1}^{(k)}+D_1$]
+\label{cor:d2cert}\certified
+Both operator positivity conditions in \eqref{eq:d2pos} hold in the following two regimes:
+\begin{enumerate}[label=(\alph*),leftmargin=2.2em]
+\item \emph{Continuous small-repulsion band:} across all $\lambda\in[3/10,3]$,
+$\muS\in[0,\lambda/64]$, $R\ge0$ and $k\ge0$, both
+$\Fcal_{\delta_1}^{(k)}(q)+D_2(\lambda,q)\succ0$ and
+$\Fcal_{\delta_1}^{(k)}(q)+D_1(\lambda,q)\succ0$ hold for all $q\ge q_*^{(s)}$ on each of
+the $33$ slabs of Theorem~\ref{thm:smallr} ($383$ exact rational boxes: $266$ for $D_2$ and
+$117$ for $D_1$, together with Theorem~\ref{thm:asym} on $[4\lambda_b^{(s)},\infty)$); in
+particular, both \eqref{eq:d2pos} and hypothesis~(2) of Theorem~\ref{thm:d2}(ii) hold at
+every realizable onset $q_E>q_*^{(s)}$.
+\item \emph{Fixed-$k$ benchmarks at $\muS/\lambda=1/2$:} across all $20$ pairs
+$(k,\lambda)\in\{1,2,3,4\}\times\{1/2,1,2,5,10\}$ at $\muS=\lambda/2$, exact rational
+brackets $[q_{\rm lo},q_{\rm hi}]\ni q_E^{(k)}(\lambda,\lambda/2)$ certify both
+$q_{\rm lo}<q_E^{(k)}(\lambda,\lambda/2)<q_{\rm hi}$ and
+$\Fcal_{\delta_1}^{(k)}(q)+D_2(\lambda,q)\succ0$,
+$\Fcal_{\delta_1}^{(k)}(q)+D_1(\lambda,q)\succ0$ throughout $[q_{\rm lo},q_{\rm hi}]$ ($40$
+boxes: $20$ for $D_2$ and $20$ for $D_1$). These $20$ benchmarks certify \eqref{eq:d2pos}
+(and hence local two-sided positivity $\Fcal_p^{(k)}(q)\succ0$ near $q_E^{(k)}$ at fixed $k$)
+without certifying global upper non-degeneracy across all $q>q_E^{(k)}$; the pair
+$(k=1,\lambda=10)$ is certified as a fixed-$k$ matrix property since $k=1$ is unrealizable
+at $\lambda=10$ by Corollary~\ref{cor:unrealizable}, whereas the other $19$ pairs satisfy
+$(2k+1)^2q_E^{(k)}(\lambda,\lambda/2)>q_{\rm ph}(\lambda)$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Writing $x=qj^2$, one has
+$\Fcal_{\delta_1}^{(k)}(\lambda,\muS;q)+D_m(\lambda,q)=D+2\muS\chi_k\chi_k^T+\mathcal T(b_{{\rm eff},m})$
+for $m\in\{1,2\}$, where the effective transfer weights are
+\[
+b_{{\rm eff},2,j}(\lambda,q):=\frac{\lambda}{1+x}-\frac{\lambda x}{(1+x)^3}
+=\frac{\lambda(1+x+x^2)}{(1+x)^3},\qquad
+b_{{\rm eff},1,j}(\lambda,q):=\frac{\lambda}{1+x}-\frac{\lambda x}{(1+x)^2}
+=\frac{\lambda}{(1+x)^2}.
+\]
+Since $0<b_{{\rm eff},m,j}(\lambda,q)<\lambda/(1+x)<\lambda/(qj^2)$ for all $x>0$,
+convexity in $\lambda\in(0,\lambda_b^{(s)}]$ with $D\succ0$, interval Schur-complement
+Cholesky on $[q_*^{(s)},4\lambda_b^{(s)}]$, and Theorem~\ref{thm:asym} on
+$[4\lambda_b^{(s)},\infty)$ certify (a) for $k=0$ and hence for all $k\ge0$ upon adding
+$2\muS\chi_k\chi_k^T\succeq0$; interval Cholesky on $[q_{\rm lo},q_{\rm hi}]$ together with
+the cold/hot bracket certificates verifies (b).
+\end{proof}
 \subsection{Where the certified failure stops: numerical phase data}\label{sec:half:num}
 
 What remains is the interior, and there the evidence is floating point only. Let
@@ -1067,24 +1462,18 @@ $\lambda=26$ the $k=5$ Coulomb penalty lifts the Einstein eigenvalue above zero 
 island $q\in[0.501,0.5234]$ below the mask jump at $q=4R^2/81=0.523457$, while the
 mixture is unstable at $q=0.52$ inside that island; the jump to $k=4$ then truncates the
 upper unstable branch of the Einstein line, leaving it stable for all $q\ge0.501$.
-\item On the single-mode branch the analytic regime of Theorem~\ref{thm:cone} is not the
-whole story. At $\muS/\lambda=1/2$ one already has $h^*_0<h^*_1$ for the Einstein line at
-$\lambda=20$, $\muS=10$ and $q=1.86444$; Einstein optimality nevertheless holds numerically
-across the two-line simplex for every $\lambda\in(2,151]$, and at $\lambda=152$ with
-$\muS=76$ the two-line spectrum with $(u_1,u_2)=(10^{-5},17.5)$ has
-$\lambda_{\min}(\Fcal_p^{(1)}(q_E))=-6.717\times10^{-5}<0$ at $q_E=4.33295$. No certificate
-is claimed for that failure either.
+\item On the single-mode branch ($k=1$), a fixed-$k$ matrix scan must be separated from common-cutoff realizability. When $k=1$ is held fixed as an abstract matrix parameter at $\muS/\lambda=1/2$, one already has $h^*_0<h^*_1$ for the Einstein line at $\lambda=20$, $\muS=10$ and $q_E^{(1)}=1.86444$, outside the cone hypothesis of Theorem~\ref{thm:cone}; fixed-$k=1$ optimality nevertheless holds numerically across the two-line simplex for $\lambda\in(2,151]$, and at $\lambda=152$ with $\muS=76$ the two-line spectrum with $(u_1,u_2)=(10^{-5},17.5)$ has $\lambda_{\min}(\Fcal_p^{(1)}(q_E^{(1)}))=-6.717\times10^{-5}<0$ at $q_E^{(1)}=4.33295$. By Lemma~\ref{lem:realizable} and Corollary~\ref{cor:unrealizable}, however, a common cutoff $R$ can realize the fixed-$k=1$ crossing only when $9\,q_E^{(1)}(\lambda,\muS)\ge q_{\rm ph}(\lambda)$. At $\muS/\lambda=1/2$ this necessary condition holds for $\lambda\in\{0.5,1,2,3,5\}$ (and passes numerically up to $\lambda\approx9.85$), but fails with a certified margin for every $\lambda\ge10$ ($q_0^{\rm cold}/(9\,q_1^{\rm hot})=1.0048$ at $\lambda=10$, growing to $5.0853$ at $\lambda=152$), including $\lambda\in\{10,20,35,50,152\}$: for any cutoff $R$ with $4R^2\le9\,q_E^{(1)}$, the unmasked crossing $q_{\rm ph}(\lambda)$ has already occurred at a strictly higher temperature ($q_{\rm ph}(152)>199.45>39.02>9\,q_E^{(1)}(152,76)$). Consequently, the fixed-$k=1$ crossings at $\lambda\ge10$ and the $\lambda=152$ fixed-$k=1$ failure cannot occur under any common cutoff $R$.
 \end{enumerate}
 
 \begin{table}[t]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{2.6pt}
+\setlength{\tabcolsep}{2.4pt}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabular}{@{}rrrrrrrrrrrr@{}}
 \toprule
 $\lambda\backslash\omega_c/\OmE$ & $1$ & $1.5$ & $2$ & $2.5$ & $3$ & $3.36$ & $3.5$ & $4$ & $5$ &
-$\inf_R$ & $k$\\
+$\inf_R$ & $k_{\min}$\\
 \midrule
 $0.5$ & $\infty$ & $0.578$ & $0.685$ & $0.768$ & $0.835$ & $0.875$ & $0.890$ & $0.941$ &
 $1.031$ & $0.5000$ & $1$\\
@@ -1097,9 +1486,9 @@ $0.799$ & $0.5000$ & $1$\\
 $5$ & $\infty$ & $0.500$ & $0.528$ & $0.565$ & $0.600$ & $0.622$ & $0.630$ & $0.660$ &
 $0.712$ & $0.5000$ & $1$\\
 $10$ & $\infty$ & $\infty$ & $\infty$ & $0.511$ & $0.533$ & $0.548$ & $0.554$ & $0.576$ &
-$0.616$ & $0.5000$ & $1$\\
+$0.616$ & $0.5000$ & $2^\dagger$\\
 $20$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $0.500$ & $0.508$ & $0.511$ & $0.525$ &
-$0.552$ & $0.5000$ & $1$\\
+$0.552$ & $0.5000$ & $5^\dagger$\\
 $25.6$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $0.4785$ & $0.502$ &
 $0.512$ & $0.536$ & $0.4785$ & $5$\\
 $26$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $0.4795$ & $0.501$ &
@@ -1111,9 +1500,9 @@ $0.506$ & $0.527$ & $0.4860$ & $5$\\
 $30$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $0.4910$ &
 $0.502$ & $0.521$ & $0.4910$ & $5$\\
 $35$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $0.500$ &
-$0.504$ & $0.512$ & $0.5000$ & $1$\\
+$0.504$ & $0.512$ & $0.5000$ & $5^\dagger$\\
 $50$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ &
-$\infty$ & $0.504$ & $0.5000$ & $1$\\
+$\infty$ & $0.504$ & $0.5000$ & $5^\dagger$\\
 \bottomrule
 \end{tabular}
 \caption{The threshold ratio $r_*(\lambda,\omega_c/\OmE)$ of two-line spectra against the
@@ -1121,8 +1510,14 @@ Einstein line, float64 (\textsc{numerical}). The entry $\infty$ marks parameter 
 which no two-line spectrum beats the Einstein line at any scanned pseudopotential; such a
 cell is unbeaten on the grid, which is weaker than optimality. The penultimate column takes
 the infimum over cutoffs of the smallest scanned pseudopotential ratio at which a two-line
-spectrum beats the Einstein line, on a grid that contains one half, and $k$ is the mask
-count recorded at that cutoff. These numbers locate the failure; they do not bound it.}
+spectrum beats the Einstein line, on a grid that contains one half. In the final column,
+$k_{\min}$ records the mask count at the sub-$1/2$ minimum where $\inf_R r_*<1/2$, and for
+rows with $\inf_R r_*=0.5000$ records the lowest non-empty mask count $k\ge1$ that is
+realizable by a common cutoff at $\muS/\lambda=1/2$ ($^\dagger$for $\lambda\in\{10,20,35,50\}$,
+fixed-$k=1$ crossings violate $9\,q_E^{(1)}\ge q_{\rm ph}(\lambda)$ by
+Corollary~\ref{cor:unrealizable}, so the lowest realizable mask count is $k=2$ at
+$\lambda=10$ and $k=5$ at $\lambda\in\{20,35,50\}$). These numbers locate the failure; they
+do not bound it.}
 \label{tab:phase}
 \end{table}
 
@@ -1137,14 +1532,15 @@ The four Einstein anchors of Table~\ref{tab:anchors} lie below the zero-repulsio
 at the same coupling, as they must, since a positive pseudopotential can only subtract
 from the pairing scale.
 
-The certified content of this section is therefore the following and nothing more: at
-$\lambda\in\{25.6,26,27,28\}$ with the cutoffs and small pseudopotentials of
+The proved and certified content of this section is therefore the following and nothing
+more: at $\lambda\in\{25.6,26,27,28\}$ with the cutoffs and small pseudopotentials of
 Table~\ref{tab:half}, Einstein is beaten; at the four parameter sets of
 Table~\ref{tab:anchors}, the Einstein onset lies inside the stated bracket; and
-Theorems~\ref{thm:twodelta} to~\ref{thm:asym} hold as stated. Everything about the shape of
-$r_*$, about the critical coupling, about $r_{\min}$ and about the single-mode branch
-beyond $\lambda=2$ is \textsc{numerical}.
-
+Lemma~\ref{lem:decomp}, Theorems~\ref{thm:twodelta} to~\ref{thm:asym},
+Lemma~\ref{lem:realizable}, Corollary~\ref{cor:unrealizable}, Lemma~\ref{lem:gb},
+Theorem~\ref{thm:smallr}, Theorem~\ref{thm:d2} and Corollary~\ref{cor:d2cert} hold as
+stated. Everything about the global shape of $r_*$ outside the certified regions, about the
+critical coupling $\lambda\approx25.55$, and about $r_{\min}$ is \textsc{numerical}.
 \section{What is not claimed}\label{sec:not}
 
 \begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
@@ -1178,14 +1574,16 @@ subtracted kernel, or a frequency-dependent pseudopotential is outside this mode
 change the rank-one structure of Proposition~\ref{prop:rank}, which is what both
 Corollary~\ref{cor:value} and the mechanism of Remark~\ref{rem:mech} rest on.
 \item Section~\ref{sec:half} is split. Its four counterexamples and four Einstein anchors
-are certified by its own pair of exact verifiers, in the same two roles as
-Section~\ref{sec:cert}, and its five analytic statements are proved, with the one
+are certified by its second pair of exact verifiers, in the same two roles as
+Section~\ref{sec:cert}; Corollary~\ref{cor:unrealizable}, Theorem~\ref{thm:smallr} and
+Corollary~\ref{cor:d2cert} are certified by a third pair of
+independent exact verifiers; and its analytic lemmas and theorems are proved, with the one
 dependency of Theorem~\ref{thm:nomask} on the zero-repulsion theorem written into its
-hypothesis and inherited by Theorem~\ref{thm:large}. The threshold ratio $r_*$, the
-critical coupling $\lambda\approx25.55$, the single-mode window beyond $\lambda=2$ and the
-phase table are \textsc{numerical}: they locate the failure and do not bound it. Neither
-the exact threshold curve nor optimality for $\muS/\lambda\le1/2$ in general is settled
-here.
+hypothesis and inherited by Theorem~\ref{thm:large}. The threshold ratio $r_*$ outside the
+certified regions, the critical coupling $\lambda\approx25.55$, and the phase table are
+\textsc{numerical}: they locate the failure and do not bound it. Neither the exact
+threshold curve nor optimality for $\muS/\lambda\le1/2$ across all couplings and masks is
+settled here.
 \end{enumerate}
 
 \section{Open problems}\label{sec:open}
@@ -1194,24 +1592,23 @@ here.
 \item \emph{Einstein optimality below one half.} This is now a question about a bounded
 region rather than the whole sector. Einstein is optimal when the mask dies at the
 crossing (Theorem~\ref{thm:nomask}), for $\lambda\ge4R^2+1$
-(Theorem~\ref{thm:large}), and on the single-mode branch for $\muS\le1$ or for $\lambda\le2$
-with $\muS/\lambda\le1/2$ (Theorem~\ref{thm:cone}); and it fails, certified, in the
-$k=5$ window of Section~\ref{sec:half:cert}. In every configuration tested with
-$\muS/\lambda\le1/2$,
-$\lambda<25.55$ and any mask width, it is not beaten. What is missing is a comparison of
-forms, not of transfers: at $\muS>0$ the rank-one penalty must be shown to cost Einstein no
-more than it costs an arbitrary spectrum throughout the masked region, at every mask width
-$k$ a common cutoff can produce. The two-line reduction of
-Theorem~\ref{thm:twodelta} reduces that to the two-line family at fixed mask, and the
-interior between the proved regimes is where a proof would have to work. No argument in
-either direction is available there.
+(Theorem~\ref{thm:large}), on the single-mode branch for $\muS\le1$ or for $\lambda\le2$
+with $\muS/\lambda\le1/2$ (Theorem~\ref{thm:cone}), and across all cutoffs $R>0$ and all
+active masks for $\muS/\lambda\le1/64$ on the compact coupling range $\lambda\in[3/10,3]$
+(Theorem~\ref{thm:smallr}); and it fails, certified, in the $k=5$ window of
+Section~\ref{sec:half:cert}. In every configuration tested with $\muS/\lambda\le1/2$,
+$\lambda<25.55$ and any mask width, it is not beaten. What remains open is extending the
+small-repulsion band $r_0>0$ uniformly as $\lambda\to0^+$ and $\lambda\to\infty$ and
+closing the gap between $\muS/\lambda=1/64$ and $\muS/\lambda=1/2$ for $\lambda<25.55$.
 \item \emph{The exact threshold curve.} Determine
 $r_*(\lambda,R)=\inf\{\muS/\lambda:\text{some spectrum beats Einstein}\}$ as a function of
-$(\lambda,R)$ and decide whether it has a positive lower bound. The dip below one half is
-certified at four parameter sets and located numerically on a grid; its full extent, the
-critical coupling of the $k=5$ window, and the failure of Einstein optimality on the
-single-mode branch from $\lambda=152$ are numerical. A certified answer to any of these
-would close part of the question.
+$(\lambda,R)$ and decide whether it has a uniform positive lower bound over all
+$(\lambda,R)\in(0,\infty)^2$. Theorem~\ref{thm:smallr} certifies $r_*(\lambda,R)\ge1/64$
+for $\lambda\in[3/10,3]$ and all $R>0$, and Corollary~\ref{cor:unrealizable} proves that the
+fixed-$k=1$ failure from $\lambda=152$ at $\muS/\lambda=1/2$ is unrealizable under any
+common cutoff. The dip below one half is certified at four parameter sets and located
+numerically on a grid; its full extent and the critical coupling of the $k=5$ window remain
+numerical.
 \item \emph{From optimizer to value.} Corollary~\ref{cor:value} gives
 $\kb\Tlin\le C(\lambda)\sqrt M$ at every $\muS\ge0$, but it does not say what the supremum
 over spectra is at positive $\muS$, nor whether it is attained by any spectrum. The
@@ -1253,7 +1650,12 @@ sub-one-half counterexamples and the
 four Einstein anchors are certified in exact arithmetic on both the folded and the unfolded
 form, the five analytic statements are checked structurally with their refutation witnesses
 outside the proved ranges, and sixteen mutant controls with their expected refusals
-accompany them. The threshold curve and the phase table of Section~\ref{sec:half:num} come
+accompany them. Corollary~\ref{cor:unrealizable}, Theorem~\ref{thm:smallr} and
+Corollary~\ref{cor:d2cert} are reproduced by a third pair of independently written exact
+verifiers in the same two roles, together with the certificate generator, the stored
+rational brackets and slab covers, and fourteen guarded mutant controls with their expected
+refusals ($8$ in the primary verifier and $6$ in the independent verifier). The threshold
+curve and the phase table of Section~\ref{sec:half:num} come
 from a separate float64 scan and are labelled as numerical. The
 direct-discretization cross-check of Section~\ref{sec:num} is a float64 program and is part
 of the supplement as a numerical sanity check; it is not part of any proof. No external
