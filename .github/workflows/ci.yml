@@ -62,10 +62,10 @@ jobs:
         run: |
           set -euo pipefail
           if grep -nF '—' paper/main.tex README.md; then exit 1; fi
-          # README names the released bracket record directory records/C-LAMBDA/ (the record
-          # scripts read records/C-LAMBDA/brackets.json by that name); scan a copy with that
+          # README names the released bracket record directory C-LAMBDA/ (the record
+          # scripts read C-LAMBDA/brackets.json by that name); scan a copy with that
           # one repository path removed so every other lane, agent and machine name still fails.
-          sed -E 's#records/C-LAMBDA/#records/<bracket-record>/#g' README.md > readme.scan
+          sed -E 's#C-LAMBDA/#<bracket-record>/#g' README.md > readme.scan
           if grep -nE '\b(CUTOFF-PAPER|MUSTAR|C-LAMBDA|BARRIERS2|ADIABATIC|PURESSH|STATIC-MODE|MASSIVE)[[:alnum:]_-]*|ceiling-20261118|D:/|C:/t|\bMac\b|\blane\b|reserved DOI|awaits review' paper/main.tex readme.scan; then exit 1; fi
           rm -f readme.scan
           if grep -rInE 'D:/|C:/|/home/runner|/Users/|scratch|MIKUSSY|subagent|Codex|Claude' \
