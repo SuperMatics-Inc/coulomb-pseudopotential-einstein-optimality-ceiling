@@ -93,8 +93,7 @@ disclosure sentence.
 ## Disclosure and review
 
 AI agents generated the proofs, code, and manuscript drafts under D. Rens' direction.
-Separate AI agents performed the independent reviews. This preprint has not been peer
-reviewed.
+Separate AI agents performed the independent reviews. This preprint has not been peer reviewed.
 
 ## Rights
 
