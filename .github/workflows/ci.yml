@@ -93,7 +93,8 @@ jobs:
           sed -E 's#C-LAMBDA/#<bracket-record>/#g' README.md > readme.scan
           if grep -nE '\b(CUTOFF-PAPER|MUSTAR|C-LAMBDA|BARRIERS2|ADIABATIC|PURESSH|STATIC-MODE|MASSIVE)[[:alnum:]_-]*|ceiling-20261118|D:/|C:/t|\bMac\b|\blane\b|reserved DOI|awaits review|subagent|Codex|Claude' paper/main.tex readme.scan; then exit 1; fi
           rm -f readme.scan
-          if grep -rInE 'D:/|C:/|/home/runner|/Users/|scratch|MIKUSSY|subagent|Codex|Claude' \
+          # `scratch` alone is the English word ("from scratch"); only a scratch path is private.
+          if grep -rInE 'D:/|C:/|/home/runner|/Users/|scratch/|/scratch|MIKUSSY|subagent|Codex|Claude' \
                --include='*.md' --include='CHECKS.txt' . ; then exit 1; fi
           grep -qF 'This preprint has not been peer reviewed.' paper/main.tex
           grep -qF 'This preprint has not been peer reviewed.' README.md
