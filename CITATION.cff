@@ -10,6 +10,7 @@ authors:
     affiliation: SuperMatics Inc.
     orcid: 'https://orcid.org/0000-0001-5839-5197'
 doi: 10.5281/zenodo.24416392
+url: https://supermatics.io/research/coulomb-pseudopotential-einstein-optimality
 repository-code: 'https://github.com/SuperMatics-Inc/coulomb-pseudopotential-einstein-optimality-ceiling'
 identifiers:
   - type: doi

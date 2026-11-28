@@ -1,4 +1,5 @@
 # The Coulomb pseudopotential and the optimality of the Einstein spectrum for the linear Eliashberg ceiling
+Research record: [The Coulomb pseudopotential and the optimality of the Einstein spectrum for the linear Eliashberg ceiling](https://supermatics.io/research/coulomb-pseudopotential-einstein-optimality).
 
 Davis Rens  
 SuperMatics Inc.  
